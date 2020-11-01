@@ -65,6 +65,7 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $job = new Job();
+
         $job->description = $request->input('description');
         $job->deadline = $request->input('deadline');
         $job->is_done = $request->input('is_done')=='on'?1:0;

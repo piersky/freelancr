@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HourStack;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +20,11 @@ class HourStackController extends Controller
         $hourstacks = DB::table('hour_stacks')
             ->join('customers', 'hour_stacks.customer_id', '=', 'customers.id')
             ->leftJoin('used_hours_v', 'hour_stacks.id', '=', 'used_hours_v.id')
-            ->select(['hour_stacks.name',
+            ->select([
+                'hour_stacks.id',
+                'hour_stacks.name',
                 'hour_stacks.qty',
+                'hour_stacks.is_active',
                 'customers.name AS customer_name',
                 'used_hours_v.used_hours'
             ])
@@ -35,7 +40,12 @@ class HourStackController extends Controller
      */
     public function create()
     {
-        //
+        $hourstacks = new HourStack();
+        $customers = Customer::where('is_active', '=', 1)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.hourstacks.create', ['hourstacks' => $hourstacks, 'customers' => $customers]);
     }
 
     /**
@@ -46,7 +56,19 @@ class HourStackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hourstack = new HourStack();
+
+        $hourstack->name = $request->input('name');
+        $hourstack->qty = $request->input('qty');
+        $hourstack->price = $request->input('price');
+        $hourstack->customer_id = $request->input('customer_id');
+        $hourstack->is_active = $request->is_active=='on'?1:0;
+        $hourstack->created_by = Auth::user()->id;
+        $hourstack->updated_by = Auth::user()->id;
+
+        $hourstack->save();
+
+        return redirect('admin/hourstacks')->with('success', 'Hour stack saved');
     }
 
     /**
@@ -68,7 +90,12 @@ class HourStackController extends Controller
      */
     public function edit($id)
     {
-        //
+        $hourstacks = new HourStack();
+        $customers = Customer::where('is_active', '=', 1)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.hourstacks.edit', ['hourstacks' => $hourstacks, 'customers' => $customers]);
     }
 
     /**
@@ -80,7 +107,18 @@ class HourStackController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $hourstack = HourStack::find($id);
+
+        $hourstack->name = $request->input('name');
+        $hourstack->qty = $request->input('qty');
+        $hourstack->price = $request->input('price');
+        $hourstack->customer_id = $request->input('customer_id');
+        $hourstack->is_active = $request->is_active=='on'?1:0;
+        $hourstack->updated_by = Auth::user()->id;
+
+        $hourstack->save();
+
+        return redirect('admin/hourstacks')->with('success', 'Hour stack updated');
     }
 
     /**
