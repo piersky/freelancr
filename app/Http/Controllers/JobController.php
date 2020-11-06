@@ -33,11 +33,15 @@ class JobController extends Controller
             ->orderByDesc('jobs.deadline')
             ->get();
 
+        $customers = Customer::where('is_active', '=', 1)
+            ->orderBy('name')
+            ->get();
+
         /*if (Gate::denies('manage-jobs', $jobs)){
             abort(401, 'Unauthorized');
         }*/
 
-        return view('admin.jobs.index', ['jobs' => $jobs]);
+        return view('admin.jobs.index', ['jobs' => $jobs, 'customers' => $customers]);
     }
 
     /**
@@ -149,5 +153,35 @@ class JobController extends Controller
         $job->save();
 
         return ['message' => 'Job changed'];
+    }
+
+    public function order($param)
+    {
+
+    }
+
+    public function filter($param)
+    {
+        $jobs = DB::table('jobs')
+            ->join('users', 'jobs.belongs_to_id', '=', 'users.id')
+            ->leftJoin('customers', 'jobs.customer_id', '=', 'customers.id')
+            ->select([
+                'jobs.id',
+                'jobs.is_done',
+                'jobs.description',
+                'jobs.deadline',
+                'users.name AS user_name',
+                'customers.name AS customer_name'
+            ])
+            ->where('customer_id', '=', $param)
+            ->orderBy('is_done')
+            ->orderByDesc('jobs.deadline')
+            ->get();
+
+        $customers = Customer::where('is_active', '=', 1)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.jobs.index', ['jobs' => $jobs, 'customers' => $customers]);
     }
 }

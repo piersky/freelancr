@@ -25,7 +25,14 @@
                                 <th class="text-left text-uppercase">{{__('jobs.Deadline')}}</th>
                                 <th class="text-left text-uppercase">{{__('jobs.Description')}}</th>
                                 <th class="text-left text-uppercase">{{__('jobs.Belongs to')}}</th>
-                                <th class="text-left text-uppercase">{{__('jobs.Customer')}}</th>
+                                <th class="text-left text-uppercase">
+                                    <select id="customer_id" name="customer_id" class="form-control">
+                                        <option>{{__('jobs.Customer')}}</option>
+                                        @foreach($customers as $customer)
+                                            <option value="{{$customer->id}}">{{$customer->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </th>
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
@@ -68,10 +75,15 @@
                        '_token': '{{csrf_token()}}'
                    },
                    complete: function(resp){
-                       console.log(url);
-                       console.log(resp);
+                       if(resp['statusText']=='OK'){
+                           window.location.reload();
+                       }
                    }
                })
+            })
+
+            $('#customer_id').change(function(){
+                location.href = "/admin/jobs/"+$(this).val()+"/filter";
             })
         })
     </script>

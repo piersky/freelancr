@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::delete('/jobs/{id}', [JobController::class, 'destroy']);
     Route::post('/jobs/search', [JobController::class, 'search'])->name('admin.jobs.search');
     Route::patch('/jobs/{id}/toggle', [JobController::class, 'toggle']);
+    Route::get('/jobs/{id}/order', [JobController::class, 'order'])->name('admin.jobs.order');
+    Route::get('/jobs/{param}/filter', [JobController::class, 'filter'])->name('admin.jobs.filter');
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('admin.customers');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('admin.customers.create');
