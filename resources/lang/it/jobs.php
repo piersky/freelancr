@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Jobs' => 'Lavori',
+    'Jobs' => 'Compiti',
     'Add new Job' => 'Aggiungi un nuovo compito',
     'Description' => 'Descrizione',
     'Done' => 'Eseguito',

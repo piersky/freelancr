@@ -3,25 +3,15 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 mb-2">
-                <a class="btn btn-success text-uppercase" href="{{ route("admin.jobs.create") }}">
-                    {{__('jobs.Add new Job')}}
-                </a>
-            </div>
             <div class="col-sm-4">
                 <h1 class="text-uppercase">{{__('jobs.Jobs')}}</h1>
             </div>
-            @if(session()->has('message'))
-                @component('layouts.alert-info')
-                    {{session()->get('message')}}
-                @endcomponent
-            @endif
-            <div class="col-sm-6">
-                @if(session()->get('success'))
-                    <div class="alert alert-success">
-                        {{ session()->get('success') }}
-                    </div>
-                @endif
+        </div>
+        <div class="row">
+            <div class="col-lg-4 mb-2">
+                <a class="btn btn-success text-uppercase" href="{{ route("admin.jobs.create") }}">
+                    {{__('jobs.Add new Job')}}
+                </a>
             </div>
         </div>
         <div class="row">
@@ -43,7 +33,7 @@
                             @foreach($jobs as $job)
                                 <tr id="tr-{{$job->id}}" class="{{($job->is_done?"bg-secondary":"")}}">
                                     <td class="text-center job-toggle" id="td-{{$job->id}}"><input data-url="/admin/jobs/{{$job->id}}/toggle" type="checkbox" name="is_done" {{$job->is_done==1?"checked":""}}></td>
-                                    <td class="text-center">{{date('m/d/Y H:m:s', strtotime($job->deadline))}}</td>
+                                    <td class="text-center">{{date('d/m/Y H:m', strtotime($job->deadline))}}</td>
                                     <td class="text-left text-uppercase">{{$job->description}}</td>
                                     <td class="text-center">{{$job->user_name}}</td>
                                     <td class="text-center">{{$job->customer_name}}</td>
@@ -65,6 +55,8 @@
     @parent
     <script>
         $('document').ready(function () {
+            $('div.alert').fadeOut(5000);
+
             $('.job-toggle').on('click', function (evt){
                 var url = $(this).children().data('url');
                 var id = this.id.replace('td-', '');

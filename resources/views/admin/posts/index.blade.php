@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-12">
                 <div class="table-responsive">
                     {{-- TODO: change view with a more similar wiki page --}}
                     <table class="table table-striped">
