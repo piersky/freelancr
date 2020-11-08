@@ -15,6 +15,7 @@ class Activity extends Model
         'project_id',
         'start_at',
         'stop_at',
+        'used_hours',
         'hourstack_id',
         'assigned_to',
         'is_active',

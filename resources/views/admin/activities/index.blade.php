@@ -25,17 +25,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-12">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         @if($activities ?? '')
                             <thead class="thead-dark">
                             <tr>
                                 <th class="text-center text-uppercase">{{__('activities.Name')}}</th>
-                                <th class="text-left text-uppercase">{{__('activities.Start at')}}</th>
-                                <th class="text-left text-uppercase">{{__('activities.End at')}}</th>
-                                <th class="text-left text-uppercase">{{__('activities.Hour stack')}}</th>
-                                <th class="text-left text-uppercase">{{__('activities.Assigned to')}}</th>
+                                <th class="text-center text-uppercase">{{__('activities.Customer name')}}</th>
+                                <th class="text-center text-uppercase">{{__('activities.Start at')}}</th>
+                                <th class="text-center text-uppercase">{{__('activities.End at')}}</th>
+                                <th class="text-center text-uppercase">{{__('activities.Used hours')}}</th>
+                                <th class="text-center text-uppercase">{{__('activities.Hour stack')}}</th>
+                                <th class="text-center text-uppercase">{{__('activities.Assigned to')}}</th>
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
@@ -43,8 +45,10 @@
                             @foreach($activities as $activity)
                                 <tr id="tr-{{$activity->id}}" class="{{(!$activity->is_active?"bg-secondary":"")}}">
                                     <td class="text-center">{{$activity->name}}</td>
+                                    <td class="text-center">{{$activity->customer_name}}</td>
                                     <td class="text-center">{{$activity->start_at}}</td>
                                     <td class="text-center">{{$activity->stop_at}}</td>
+                                    <td class="text-center">{{$activity->used_hours}}</td>
                                     <td class="text-center">{{$activity->hour_stack_name}}</td>
                                     <td class="text-center">{{$activity->user_name}}</td>
                                     <td class="d-flex justify-content-end">
@@ -65,6 +69,8 @@
     @parent
     <script>
         $('document').ready(function () {
+            $('.alert').fadeOut(5000);
+
             $('.job-toggle').on('click', function (evt){
                 var url = $(this).children().data('url');
                 var id = this.id.replace('td-', '');

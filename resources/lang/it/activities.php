@@ -12,5 +12,8 @@ return [
     'End at' => 'Fine',
     'Hour stack' => 'Pacchetto ore',
     'Assigned to' => 'Assegnato a',
-    'Is active' => 'Attivo'
+    'Is active' => 'Attivo',
+    'Used hours' => 'Ore usate',
+    'Edit activity' => 'Modifica attività',
+    'Customer name' => 'Cliente'
 ];
