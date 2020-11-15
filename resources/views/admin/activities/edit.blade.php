@@ -6,18 +6,6 @@
             <div class="col-sm-4">
                 <h1 class="text-uppercase">{{__('activities.Edit activity')}}</h1>
             </div>
-            @if(session()->has('message'))
-                @component('layouts.alert-info')
-                    {{session()->get('message')}}
-                @endcomponent
-            @endif
-            <div class="col-sm-6">
-                @if(session()->get('success'))
-                    <div class="alert alert-success">
-                        {{ session()->get('success') }}
-                    </div>
-                @endif
-            </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
@@ -35,7 +23,7 @@
                         </div>
                         <div class="form-group col-sm-3">
                             <label for="used_hours"><strong>{{__('activities.Used hours')}}</strong></label>
-                            <input type="number" name="used_hours" id="used_hours" class="form-control" value="{{old('used_hours', $activity->used_hours)}}">
+                            <input type="number" step="0.1" name="used_hours" id="used_hours" class="form-control" value="{{old('used_hours', $activity->used_hours)}}">
                         </div>
                     </div>
                     <div class="row">
@@ -47,7 +35,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="description"><strong>{{__('activities.Description')}}</strong></label>
-                            <input type="text" name="description" id="description" class="form-control" value="{{old('description')}}" placeholder="{{__('activities.Description')}}">
+                            <input type="text" name="description" id="description" class="form-control" value="{{old('description', $activity->description)}}">
                         </div>
                     </div>
                     <div class="row">
@@ -92,4 +80,36 @@
             </div>
         </div>
     </div>
+@endsection
+@section('footer')
+    @parent
+    <script>
+        $('document').ready(function () {
+            $('#start_at').change(function (){
+                var d1 = new Date($(this).val());
+                var d2 = new Date($('#stop_at').val());
+                var diff_ms = d2 - d1;
+                var diff_days = Math.floor(diff_ms / 86400000);
+                var diff_hours = Math.floor((diff_ms % 86400000) / 3600000);
+                var diff_mins = Math.round(((diff_ms % 86400000) % 3600000) / 60000);
+
+                var hours = diff_days * 24 + diff_hours + Math.round(diff_mins * 10 / 60) / 10;
+
+                $('#used_hours').val(hours.toFixed(1));
+            })
+
+            $('#stop_at').change(function (){
+                var d1 = new Date($('#start_at').val());
+                var d2 = new Date($(this).val());
+                var diff_ms = d2 - d1;
+                var diff_days = Math.floor(diff_ms / 86400000);
+                var diff_hours = Math.floor((diff_ms % 86400000) / 3600000);
+                var diff_mins = Math.round(((diff_ms % 86400000) % 3600000) / 60000);
+
+                var hours = diff_days * 24 + diff_hours + Math.round(diff_mins * 10 / 60) / 10;
+
+                $('#used_hours').val(hours.toFixed(1));
+            })
+        })
+    </script>
 @endsection
