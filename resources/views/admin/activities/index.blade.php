@@ -24,6 +24,13 @@
                 @endif
             </div>
         </div>
+        @if($activities ?? '')
+            <div class="row">
+                <div class="col-sm-4 my-2 justify-content-end">
+                    {{$activities->links()}}
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive">
@@ -53,6 +60,7 @@
                                     <td class="text-center">{{$activity->user_name}}</td>
                                     <td class="d-flex justify-content-end">
                                         <a href="/admin/activities/{{$activity->id}}/edit" class="btn btn-info"><span class="fa fa-pencil-alt"></span></a>
+                                        <button type="button" class="btn btn-danger" data-id="{{$activity->id}}" data-url="/admin/activities/{{$activity->id}}"><span class="fa fa-trash"></span></button>
                                 </tr>
                             @endforeach
                             @else
@@ -60,6 +68,32 @@
                             </tbody>
                         @endif
                     </table>
+                </div>
+            </div>
+            @if($activities ?? '')
+                <div class="row">
+                    <div class="col-sm-4 my-2 justify-content-end">
+                        {{$activities->links()}}
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title text-uppercase" id="exampleModalLabel">{{__('Confirm')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{__('Please, click on DELETE to confirm the record cancellation.')}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
+                    <button type="submit" class="btn btn-danger text-uppercase" id ="btn-delete">{{__('Delete')}}</button>
                 </div>
             </div>
         </div>
@@ -71,22 +105,33 @@
         $('document').ready(function () {
             $('.alert').fadeOut(5000);
 
-            $('.job-toggle').on('click', function (evt){
-                var url = $(this).children().data('url');
-                var id = this.id.replace('td-', '');
-                $.ajax(
-                    {
+            $('.btn.btn-danger').on('click', function (evt){
+                evt.preventDefault();
+
+                var url = $(this).data('url');
+                var id = $(this).data('id');
+                var tr = $('#tr-'+id);
+
+                $('#deleteModal').modal('show');
+
+                $('#btn-delete').on('click', function () {
+                    $.ajax({
                         url: url,
-                        method: 'PATCH',
+                        method: 'DELETE',
                         data: {
                             '_token': '{{csrf_token()}}'
                         },
                         complete: function(resp){
-                            console.log(url);
-                            console.log(resp);
+                            if (resp.responseText == 1) {
+                                tr.remove();
+                                $('#deleteModal').modal('hide');
+                            } else {
+                                console.log('Problem contacting the server');
+                            }
                         }
                     })
-            })
-        })
+                });
+            });
+        });
     </script>
 @endsection

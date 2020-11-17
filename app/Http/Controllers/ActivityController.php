@@ -195,6 +195,34 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $activity = Activity::find($id);
+        $result = $activity->delete();
+
+        if (request()->ajax()) return '' . $result;
+        else return redirect()->back();
+    }
+
+    public function filter($hsid) {
+        $activities = DB::table('activities')
+            ->join('projects', 'activities.project_id', '=', 'projects.id')
+            ->join('customers', 'projects.customer_id', '=', 'customers.id')
+            ->join('hour_stacks', 'activities.hourstack_id', '=', 'hour_stacks.id')
+            ->join('users', 'users.id', '=', 'activities.assigned_to')
+            ->select([
+                'activities.id',
+                'activities.name',
+                'activities.start_at',
+                'activities.stop_at',
+                'activities.is_active',
+                'activities.used_hours',
+                'hour_stacks.name AS hour_stack_name',
+                'users.name AS user_name',
+                'customers.name AS customer_name'
+            ])
+            ->where('hourstack_id', '=', $hsid)
+            ->orderByDesc('activities.start_at')
+            ->paginate(20);
+
+        return view('admin.activities.index', ['activities' => $activities]);
     }
 }

@@ -32,9 +32,9 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th class="text-center text-uppercase">{{__('hourstacks.Name')}}</th>
-                                <th class="text-left text-uppercase">{{__('hourstacks.Customer')}}</th>
-                                <th class="text-left text-uppercase">{{__('hourstacks.Hours')}}</th>
-                                <th class="text-left text-uppercase">{{__('hourstacks.Used')}}</th>
+                                <th class="text-center text-uppercase">{{__('hourstacks.Customer')}}</th>
+                                <th class="text-center text-uppercase">{{__('hourstacks.Hours')}}</th>
+                                <th class="text-center text-uppercase">{{__('hourstacks.Used')}}</th>
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
@@ -46,6 +46,7 @@
                                     <td class="text-left">{{$hourstack->qty}}</td>
                                     <td class="text-center">{{$hourstack->used_hours}}</td>
                                     <td class="d-flex justify-content-end">
+                                        <a href="/admin/activities/{{$hourstack->id}}/filter" class="btn btn-info"><span class="fa fa-eye"></span></a>
                                         <a href="/admin/hourstacks/{{$hourstack->id}}/edit" class="btn btn-info"><span class="fa fa-pencil-alt"></span></a>
                                 </tr>
                             @endforeach
