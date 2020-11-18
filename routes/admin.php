@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/activities/{id}', [ActivityController::class, 'update'])->name('admin.activities.update');
     Route::delete('/activities/{id}', [ActivityController::class, 'destroy']);
     Route::get('/activities/{hsid}/filter', [ActivityController::class, 'filter'])->name('admin.activities.filter');
+    Route::get('/activities/{id}', [ActivityController::class, 'show'])->name('admin.activities.show');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('admin.projects');
     Route::get('/projects/create', [ProjectController::class, 'create'])->name('admin.projects.create');

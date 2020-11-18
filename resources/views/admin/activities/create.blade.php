@@ -86,6 +86,7 @@
                     </div>
 
                     <a href="/admin/activities" class="btn btn-danger">{{__('Cancel')}}</a>
+                    <a class="btn btn-success text-uppercase" href="{{ route("admin.activities.create") }}">{{__('Save and new')}}</a>
                     <button type="submit" class="btn btn-primary text-uppercase">{{__('Submit')}}</button>
                 </form>
             </div>

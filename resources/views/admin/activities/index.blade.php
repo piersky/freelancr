@@ -51,7 +51,7 @@
                             <tbody>
                             @foreach($activities as $activity)
                                 <tr id="tr-{{$activity->id}}" class="{{(!$activity->is_active?"bg-secondary":"")}}">
-                                    <td class="text-center">{{$activity->name}}</td>
+                                    <td class="text-center">{{substr($activity->name, 0, 30)}}...</td>
                                     <td class="text-center">{{$activity->customer_name}}</td>
                                     <td class="text-center">{{$activity->start_at}}</td>
                                     <td class="text-center">{{$activity->stop_at}}</td>
@@ -59,6 +59,7 @@
                                     <td class="text-center">{{$activity->hour_stack_name}}</td>
                                     <td class="text-center">{{$activity->user_name}}</td>
                                     <td class="d-flex justify-content-end">
+                                        <a href="/admin/activities/{{$activity->id}}" class="btn btn-success"><span class="fa fa-eye"></span></a>
                                         <a href="/admin/activities/{{$activity->id}}/edit" class="btn btn-info"><span class="fa fa-pencil-alt"></span></a>
                                         <button type="button" class="btn btn-danger" data-id="{{$activity->id}}" data-url="/admin/activities/{{$activity->id}}"><span class="fa fa-trash"></span></button>
                                 </tr>

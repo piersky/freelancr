@@ -40,7 +40,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            <label for="projetc_id"><strong>{{__('activities.Project')}}*</strong></label>
+                            <label for="project_id"><strong>{{__('activities.Project')}}*</strong></label>
                             <select id="project_id" name="project_id" class="form-control">
                                 <option>{{__('Select...')}}</option>
                                 @foreach($projects as $project)

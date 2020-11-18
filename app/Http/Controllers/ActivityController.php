@@ -116,7 +116,23 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        //
+        $activity = DB::table('activities')
+            ->join('projects', 'activities.project_id', '=', 'projects.id')
+            ->join('customers', 'projects.customer_id', '=', 'customers.id')
+            ->join('hour_stacks', 'activities.hourstack_id', '=', 'hour_stacks.id')
+            ->join('users', 'users.id', '=', 'activities.assigned_to')
+            ->select([
+                'activities.*',
+                'projects.name AS project_name',
+                'hour_stacks.name AS hour_stack_name',
+                'users.name AS user_name',
+                'customers.name AS customer_name'
+            ])
+            ->where('activities.id', '=', $id)
+            ->orderByDesc('activities.start_at')
+            ->get();
+
+        return view('admin.activities.show', ['activity' => $activity[0]]);
     }
 
     /**
