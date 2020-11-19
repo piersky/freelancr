@@ -44,8 +44,8 @@
                                     <td class="text-center">{{$customer->phone}}</td>
                                     <td class="text-center">{{$customer->email}}</td>
                                     <td class="d-flex justify-content-end">
-                                        <a href="/admin/customers/{{$customer->id}}/edit" class="btn btn-info"><span class="fa fa-pencil-alt"></span></a>
-                                        <button type="button" class="btn btn-danger" data-id="{{$customer->id}}" data-url="/admin/customers/{{$customer->id}}"><span class="fa fa-trash"></span></button></td>
+                                        <a href="/admin/customers/{{$customer->id}}/edit" class="btn btn-info mr-1"><span class="fa fa-pencil-alt"></span></a>
+                                        <button type="button" class="btn btn-danger ml-1" data-id="{{$customer->id}}" data-url="/admin/customers/{{$customer->id}}"><span class="fa fa-trash"></span></button></td>
                                 </tr>
                             @endforeach
                             @else

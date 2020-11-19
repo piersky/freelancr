@@ -70,4 +70,5 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/posts', [PostController::class, 'store']);
     Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('admin.posts.edit');
     Route::patch('/posts/{id}', [PostController::class, 'update'])->name('admin.posts.update');
+    Route::get('/posts/{id}', [PostController::class, 'show'])->name('admin.posts.show');
 });

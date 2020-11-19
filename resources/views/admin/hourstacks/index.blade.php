@@ -46,8 +46,8 @@
                                     <td class="text-left">{{$hourstack->qty}}</td>
                                     <td class="text-center">{{$hourstack->used_hours}}</td>
                                     <td class="d-flex justify-content-end">
-                                        <a href="/admin/activities/{{$hourstack->id}}/filter" class="btn btn-info"><span class="fa fa-eye"></span></a>
-                                        <a href="/admin/hourstacks/{{$hourstack->id}}/edit" class="btn btn-info"><span class="fa fa-pencil-alt"></span></a>
+                                        <a href="/admin/activities/{{$hourstack->id}}/filter" class="btn btn-success mr-1"><span class="fa fa-eye"></span></a>
+                                        <a href="/admin/hourstacks/{{$hourstack->id}}/edit" class="btn btn-info ml-1"><span class="fa fa-pencil-alt"></span></a>
                                 </tr>
                             @endforeach
                             @else
@@ -64,22 +64,7 @@
     @parent
     <script>
         $('document').ready(function () {
-            $('.job-toggle').on('click', function (evt){
-                var url = $(this).children().data('url');
-                var id = this.id.replace('td-', '');
-                $.ajax(
-                    {
-                        url: url,
-                        method: 'PATCH',
-                        data: {
-                            '_token': '{{csrf_token()}}'
-                        },
-                        complete: function(resp){
-                            console.log(url);
-                            console.log(resp);
-                        }
-                    })
-            })
+            $('div.alert').fadeOut(5000);
         })
     </script>
 @endsection

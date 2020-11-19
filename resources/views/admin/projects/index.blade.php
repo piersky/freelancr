@@ -32,16 +32,16 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th class="text-center text-uppercase">{{__('projects.Name')}}</th>
-                                <th class="text-left text-uppercase">{{__('projects.Deadline')}}</th>
-                                <th class="text-left text-uppercase">{{__('projects.Description')}}</th>
-                                <th class="text-left text-uppercase">{{__('projects.Customer')}}</th>
+                                <th class="text-center text-uppercase">{{__('projects.Deadline')}}</th>
+                                <th class="text-center text-uppercase">{{__('projects.Description')}}</th>
+                                <th class="text-center text-uppercase">{{__('projects.Customer')}}</th>
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($projects as $project)
                                 <tr id="tr-{{$project->id}}" class="{{(!$project->is_active?"bg-secondary":"")}}">
-                                    <td class="text-center">{{$project->name}}</td>
+                                    <td class="text-center text-uppercase"><strong>{{$project->name}}</strong></td>
                                     <td class="text-center">{{$project->deadline_date!=""?date('m/d/Y H:m:s', strtotime($project->deadline_date)):""}}</td>
                                     <td class="text-center">{{$project->description}}</td>
                                     <td class="text-center">{{$project->customer_name}}</td>

@@ -59,9 +59,9 @@
                                     <td class="text-center">{{$activity->hour_stack_name}}</td>
                                     <td class="text-center">{{$activity->user_name}}</td>
                                     <td class="d-flex justify-content-end">
-                                        <a href="/admin/activities/{{$activity->id}}" class="btn btn-success"><span class="fa fa-eye"></span></a>
-                                        <a href="/admin/activities/{{$activity->id}}/edit" class="btn btn-info"><span class="fa fa-pencil-alt"></span></a>
-                                        <button type="button" class="btn btn-danger" data-id="{{$activity->id}}" data-url="/admin/activities/{{$activity->id}}"><span class="fa fa-trash"></span></button>
+                                        <a href="/admin/activities/{{$activity->id}}" class="btn btn-success mr-1"><span class="fa fa-eye"></span></a>
+                                        <a href="/admin/activities/{{$activity->id}}/edit" class="btn btn-info ml-1 mr-1"><span class="fa fa-pencil-alt"></span></a>
+                                        <button type="button" class="btn btn-danger ml-1" data-id="{{$activity->id}}" data-url="/admin/activities/{{$activity->id}}"><span class="fa fa-trash"></span></button>
                                 </tr>
                             @endforeach
                             @else

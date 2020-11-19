@@ -33,23 +33,24 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th class="text-center text-uppercase">{{__('posts.Title')}}</th>
-                                <th class="text-left text-uppercase">{{__('posts.Excerpt')}}</th>
-                                <th class="text-left text-uppercase">{{__('posts.Author')}}</th>
-                                <th class="text-left text-uppercase">{{__('posts.Last update')}}</th>
-                                <th class="text-left text-uppercase">{{__('posts.Category')}}</th>
+                                <th class="text-center text-uppercase">{{__('posts.Excerpt')}}</th>
+                                <th class="text-center text-uppercase">{{__('posts.Author')}}</th>
+                                <th class="text-center text-uppercase">{{__('posts.Last update')}}</th>
+                                <th class="text-center text-uppercase">{{__('posts.Category')}}</th>
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($posts as $post)
                                 <tr id="tr-{{$post->id}}" class="{{(!$post->is_published?"bg-secondary":"")}}">
-                                    <td class="text-center">{{$post->title}}</td>
+                                    <td class="text-center text-uppercase"><strong>{{substr($post->title, 0, 30)}}...</strong></td>
                                     <td class="text-center">{{substr($post->content, 0, 30)}}...</td>
-                                    <td class="text-left text-uppercase">{{$post->author_name}}</td>
+                                    <td class="text-center text-uppercase">{{$post->author_name}}</td>
                                     <td class="text-center">{{date('m/d/Y H:m:s', strtotime($post->updated_at))}}</td>
                                     <td class="text-center">{{$post->category_name}}</td>
                                     <td class="d-flex justify-content-end">
-                                        <a href="/admin/posts/{{$post->id}}/edit" class="btn btn-info"><span class="fa fa-pencil-alt"></span></a>
+                                        <a href="/admin/posts/{{$post->id}}" class="btn btn-success mr-1"><span class="fa fa-eye"></span></a>
+                                        <a href="/admin/posts/{{$post->id}}/edit" class="btn btn-info ml-1"><span class="fa fa-pencil-alt"></span></a>
                                 </tr>
                             @endforeach
                             @else
