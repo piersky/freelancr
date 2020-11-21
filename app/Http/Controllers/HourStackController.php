@@ -41,6 +41,7 @@ class HourStackController extends Controller
     public function create()
     {
         $hourstacks = new HourStack();
+
         $customers = Customer::where('is_active', '=', 1)
             ->orderBy('name')
             ->get();
@@ -90,12 +91,13 @@ class HourStackController extends Controller
      */
     public function edit($id)
     {
-        $hourstacks = new HourStack();
+        $hourstack = HourStack::find($id);
+
         $customers = Customer::where('is_active', '=', 1)
             ->orderBy('name')
             ->get();
 
-        return view('admin.hourstacks.edit', ['hourstacks' => $hourstacks, 'customers' => $customers]);
+        return view('admin.hourstacks.edit', ['hourstack' => $hourstack, 'customers' => $customers]);
     }
 
     /**

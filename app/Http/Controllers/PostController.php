@@ -83,7 +83,18 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = DB::table('posts')
+            ->join('users', 'posts.author_id', '=', 'users.id')
+            ->join('project_categories', 'posts.category_id', '=', 'project_categories.id')
+            ->select([
+                'posts.*',
+                'users.name AS author_name',
+                'project_categories.name AS category_name'
+            ])
+            ->where('posts.id', '=', $id)
+            ->get();
+
+        return view('admin.posts.show', ['post' => $post[0]]);
     }
 
     /**

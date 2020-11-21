@@ -27,7 +27,7 @@
                             <select id="belongs_to_id" name="belongs_to_id" class="form-control">
                                 <option>{{__('Select...')}}</option>
                                 @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    <option value="{{$user->id}}" {{Auth::user()->id==$user->id?"selected":""}}>{{$user->name}}</option>
                                 @endforeach
                             </select>
                         </div>

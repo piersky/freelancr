@@ -30,7 +30,7 @@
                         <div class="form-group col-sm-3">
                             <label for="customer_id"><strong>{{__('projects.Customer')}}</strong></label>
                             <select id="customer_id" name="customer_id" class="form-control">
-                                <option {{$project->customer_id!=""?"selected":""}}>{{__('Select...')}}</option>
+                                <option>{{__('Select...')}}</option>
                                 @foreach($customers as $customer)
                                     <option value="{{$customer->id}}" {{$customer->id==$project->customer_id?"selected":""}}>{{$customer->name}}</option>
                                 @endforeach

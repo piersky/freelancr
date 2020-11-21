@@ -129,7 +129,6 @@ class ActivityController extends Controller
                 'customers.name AS customer_name'
             ])
             ->where('activities.id', '=', $id)
-            ->orderByDesc('activities.start_at')
             ->get();
 
         return view('admin.activities.show', ['activity' => $activity[0]]);

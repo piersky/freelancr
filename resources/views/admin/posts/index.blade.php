@@ -67,22 +67,7 @@
     @parent
     <script>
         $('document').ready(function () {
-            $('.job-toggle').on('click', function (evt){
-                var url = $(this).children().data('url');
-                var id = this.id.replace('td-', '');
-                $.ajax(
-                    {
-                        url: url,
-                        method: 'PATCH',
-                        data: {
-                            '_token': '{{csrf_token()}}'
-                        },
-                        complete: function(resp){
-                            console.log(url);
-                            console.log(resp);
-                        }
-                    })
-            })
+            $('div.alert').fadeOut(5000);
         })
     </script>
 @endsection
