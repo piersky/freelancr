@@ -64,6 +64,7 @@
                                         <button type="button" class="btn btn-danger ml-1" data-id="{{$activity->id}}" data-url="/admin/activities/{{$activity->id}}"><span class="fa fa-trash"></span></button>
                                 </tr>
                             @endforeach
+                            <tr><td></td><td></td><td></td><td></td><td class="text-center"><strong>{{$sum}}</strong></td><td></td><td></td><td></td></tr>
                             @else
                                 <tr><td><h2>{{__('activities.No activities yet.')}}</h2></td></tr>
                             </tbody>

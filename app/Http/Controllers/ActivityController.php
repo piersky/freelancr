@@ -38,7 +38,9 @@ class ActivityController extends Controller
             ->orderByDesc('activities.start_at')
             ->paginate(20);
 
-        return view('admin.activities.index', ['activities' => $activities]);
+        $sum = $activities->sum('used_hours');
+
+        return view('admin.activities.index', ['activities' => $activities, 'sum' => $sum]);
     }
 
     /**
@@ -234,10 +236,12 @@ class ActivityController extends Controller
                 'users.name AS user_name',
                 'customers.name AS customer_name'
             ])
-            ->where('hourstack_id', '=', $hsid)
+            ->where('activities.hourstack_id', '=', $hsid)
             ->orderByDesc('activities.start_at')
             ->paginate(20);
 
-        return view('admin.activities.index', ['activities' => $activities]);
+        $sum = $activities->sum('used_hours');
+
+        return view('admin.activities.index', ['activities' => $activities, 'sum' => $sum]);
     }
 }
