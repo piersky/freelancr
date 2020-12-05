@@ -26,8 +26,11 @@ class HourStackController extends Controller
                 'hour_stacks.qty',
                 'hour_stacks.is_active',
                 'customers.name AS customer_name',
-                'used_hours_v.used_hours'
+                'used_hours_v.used_hours',
+                'hour_stacks.price'
             ])
+            ->orderByDesc('hour_stacks.is_active')
+            ->orderByDesc('hour_stacks.created_at')
             ->get();
 
         return view('admin.hourstacks.index', ['hourstacks' => $hourstacks]);

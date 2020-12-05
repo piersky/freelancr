@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-10">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         @if($hourstacks ?? '')
@@ -35,6 +35,7 @@
                                 <th class="text-center text-uppercase">{{__('hourstacks.Customer')}}</th>
                                 <th class="text-center text-uppercase">{{__('hourstacks.Hours')}}</th>
                                 <th class="text-center text-uppercase">{{__('hourstacks.Used')}}</th>
+                                <th class="text-center text-uppercase">{{__('hourstacks.Value')}}</th>
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
@@ -45,6 +46,7 @@
                                     <td class="text-center">{{$hourstack->customer_name}}</td>
                                     <td class="text-left">{{$hourstack->qty}}</td>
                                     <td class="text-center">{{$hourstack->used_hours}}</td>
+                                    <td class="text-rightr">@money($hourstack->price * $hourstack->used_hours)</td>
                                     <td class="d-flex justify-content-end">
                                         <a href="/admin/activities/{{$hourstack->id}}/filter" class="btn btn-success mr-1"><span class="fa fa-eye"></span></a>
                                         <a href="/admin/hourstacks/{{$hourstack->id}}/edit" class="btn btn-info ml-1"><span class="fa fa-pencil-alt"></span></a>
