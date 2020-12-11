@@ -22,6 +22,7 @@ class CreateHourStacksTable extends Migration
             $table->foreign('customer_id')->on('customers')->references('id');
             $table->timestamps();
             $table->boolean('is_active')->default(1);
+            $table->boolean('is_prepayed')->default(0);
             $table->bigInteger('created_by')->unsigned();
             $table->foreign('created_by')->on('users')->references('id');
             $table->bigInteger('updated_by')->unsigned();

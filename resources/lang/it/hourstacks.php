@@ -10,5 +10,7 @@ return [
     'Used' => 'Ore usate',
     'Number of hours' => 'Numero di ore',
     'Price' => 'Prezzo',
-    'Is active' => 'Attivo'
+    'Is active' => 'Attivo',
+    'Value' => 'Valore',
+    'Is prepayed' => 'Pagamento anticipato'
 ];

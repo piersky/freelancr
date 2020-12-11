@@ -46,12 +46,13 @@
                                     <td class="text-center">{{$hourstack->customer_name}}</td>
                                     <td class="text-left">{{$hourstack->qty}}</td>
                                     <td class="text-center">{{$hourstack->used_hours}}</td>
-                                    <td class="text-rightr">@money($hourstack->price * $hourstack->used_hours)</td>
+                                    <td class="text-center">@money($hourstack->price * $hourstack->used_hours)</td>
                                     <td class="d-flex justify-content-end">
                                         <a href="/admin/activities/{{$hourstack->id}}/filter" class="btn btn-success mr-1"><span class="fa fa-eye"></span></a>
                                         <a href="/admin/hourstacks/{{$hourstack->id}}/edit" class="btn btn-info ml-1"><span class="fa fa-pencil-alt"></span></a>
                                 </tr>
                             @endforeach
+                            <tr><td></td><td></td><td></td><td></td><td class="text-center">@money($total)</td><td></td></tr>
                             @else
                                 <tr><td><h2>{{__('hourstacks.No hour stacks yet.')}}</h2></td></tr>
                             </tbody>

@@ -42,6 +42,10 @@
                             <label for="is_active"><strong>{{__('hourstacks.Is active')}}</strong></label>
                             <input type="checkbox" {{$hourstack->is_active?"checked":""}} name="is_active" id="is_active" class="form-control">
                         </div>
+                        <div class="form-group col-2">
+                            <label for="is_prepayed"><strong>{{__('hourstacks.Is prepayed')}}</strong></label>
+                            <input type="checkbox" {{$hourstack->is_prepayed?"checked":""}} name="is_prepayed" id="is_prepayed" class="form-control">
+                        </div>
                     </div>
 
                     <a href="/admin/hourstacks" class="btn btn-danger">{{__('Cancel')}}</a>

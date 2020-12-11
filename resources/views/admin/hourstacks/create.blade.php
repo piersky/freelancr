@@ -37,9 +37,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-1">
+                        <div class="form-group col-2">
                             <label for="is_active"><strong>{{__('hourstacks.Is active')}}</strong></label>
                             <input type="checkbox" checked name="is_active" id="is_active" class="form-control">
+                        </div>
+                        <div class="form-group col-2">
+                            <label for="is_prepayed"><strong>{{__('hourstacks.Is prepayed')}}</strong></label>
+                            <input type="checkbox" name="is_prepayed" id="is_prepayed" class="form-control">
                         </div>
                     </div>
 

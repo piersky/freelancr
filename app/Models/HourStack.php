@@ -15,6 +15,7 @@ class HourStack extends Model
         'price',
         'customer_id',
         'is_active',
+        'is_prepayed',
         'created_by',
         'created_at',
         'updated_by',

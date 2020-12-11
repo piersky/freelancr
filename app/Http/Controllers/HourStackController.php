@@ -27,13 +27,16 @@ class HourStackController extends Controller
                 'hour_stacks.is_active',
                 'customers.name AS customer_name',
                 'used_hours_v.used_hours',
-                'hour_stacks.price'
+                DB::raw('CASE WHEN hour_stacks.is_active = 1 AND hour_stacks.is_prepayed = 0 THEN hour_stacks.price ELSE 0 END AS price'),
+                DB::raw('CASE WHEN hour_stacks.is_active = 1 AND hour_stacks.is_prepayed = 0 THEN hour_stacks.price * used_hours_v.used_hours ELSE 0 END AS tot')
             ])
             ->orderByDesc('hour_stacks.is_active')
             ->orderByDesc('hour_stacks.created_at')
             ->get();
 
-        return view('admin.hourstacks.index', ['hourstacks' => $hourstacks]);
+        $total = $hourstacks->sum('tot');
+
+        return view('admin.hourstacks.index', ['hourstacks' => $hourstacks, 'total' => $total]);
     }
 
     /**
@@ -67,6 +70,7 @@ class HourStackController extends Controller
         $hourstack->price = $request->input('price');
         $hourstack->customer_id = $request->input('customer_id');
         $hourstack->is_active = $request->is_active=='on'?1:0;
+        $hourstack->is_prepayed = $request->is_prepayed=='on'?1:0;
         $hourstack->created_by = Auth::user()->id;
         $hourstack->updated_by = Auth::user()->id;
 
@@ -119,6 +123,7 @@ class HourStackController extends Controller
         $hourstack->price = $request->input('price');
         $hourstack->customer_id = $request->input('customer_id');
         $hourstack->is_active = $request->is_active=='on'?1:0;
+        $hourstack->is_prepayed = $request->is_prepayed=='on'?1:0;
         $hourstack->updated_by = Auth::user()->id;
 
         $hourstack->save();
