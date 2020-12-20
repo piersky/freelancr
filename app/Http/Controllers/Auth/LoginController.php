@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Rules\RecaptchaRule;
 
 class LoginController extends Controller
 {
@@ -50,6 +51,7 @@ class LoginController extends Controller
         $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',
+            'g-recaptcha-response' => ['required', new RecaptchaRule()],
         ]);
     }
 }

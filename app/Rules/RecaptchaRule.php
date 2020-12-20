@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class RecaptchaV3Rule implements Rule
+class RecaptchaRule implements Rule
 {
     protected $error_codes;
 
@@ -29,7 +29,7 @@ class RecaptchaV3Rule implements Rule
     {
         // Reference: https://codeforgeek.com/google-recaptcha-v3-tutorial/
         $url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = ['secret' => "config('app.recaptcha.secret_key')", 'response' => $value];
+        $data = ['secret' => "6LeZC9kZAAAAALKrqRXgXiQfu37AdP-JFcOKSarP", 'response' => $value];
         $options = ['http' => [
             'header' => "Content-type: application/x-www-form-urlencoded\r\n",
             'method' => 'POST',

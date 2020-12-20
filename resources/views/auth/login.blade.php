@@ -4,7 +4,7 @@
     <div class="container border">
         <form method="POST" action="{{ route('login') }}" class="form-signin">
             @csrf
-{{--            <input type="hidden" name="g-recaptcha-response">--}}
+            <input type="hidden" name="g-recaptcha-response">
             <img src="{{asset('tai-chi.png')}}" class="mb-1" width="120">
             <h1 class="h3 my-3 font-weight-normal">{{__('Please sign in')}}</h1>
             <label for="email" class="sr-only">{{ __('E-Mail Address') }}</label>
@@ -32,14 +32,14 @@
         <p class="my-3 text-muted">&copy; 2020 <a href="https://pierluigipapeschi.com">Pier Luigi Papeschi</a></p>
         </form>
     </div>
-    {{--<script src="https://www.google.com/recaptcha/api.js?render={{ config('app.recaptcha.site_key') }}"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{config('app.site_key')}}"></script>
     <script>
-        let siteKey = "{{ config('app.recaptcha.site_key') }}"
+        let siteKey = "{{config('app.site_key')}}"
         grecaptcha.ready(function() {
             grecaptcha.execute(siteKey, {action: 'login'})
                 .then(function (token) {
                     document.querySelector('input[name=g-recaptcha-response]').value = token
                 })
         })
-    </script>--}}
+    </script>
 @endsection
