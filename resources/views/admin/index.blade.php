@@ -1,11 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Jobs due</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4>{{__('Jobs Due')}}</h4>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{__('Jobs for')}} {{Auth::user()->name}}</h5>
+                <table>
+                @foreach($jobs as $job)
+                    <tr>
+                        <td class="text-left px-3">{{date('d/m/Y H:i', strtotime($job->deadline))}}</td>
+                        <td class="text-left text-uppercase">{{$job->description}}</td>
+                        <td class="text-leftr px-3">{{$job->customer_name}}</td>
+                        <td><a href="#" class="btn btn-primary pl-3">Go somewhere</a></td>
+                    </tr>
+                @endforeach
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h4>{{__('Last activities')}}</h4>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{__('Jobs for')}} {{Auth::user()->name}}</h5>
+                <table>
+                    @foreach($jobs as $job)
+                        <tr>
+                            <td class="text-left px-3">{{date('d/m/Y H:i', strtotime($job->deadline))}}</td>
+                            <td class="text-left text-uppercase">{{$job->description}}</td>
+                            <td class="text-leftr px-3">{{$job->customer_name}}</td>
+                            <td><a href="#" class="btn btn-primary pl-3">Go somewhere</a></td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
         </div>
     </div>
 @endsection

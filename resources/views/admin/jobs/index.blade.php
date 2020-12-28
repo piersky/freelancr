@@ -40,7 +40,7 @@
                             @foreach($jobs as $job)
                                 <tr id="tr-{{$job->id}}" class="{{($job->is_done?"bg-secondary":"")}}">
                                     <td class="text-center job-toggle" id="td-{{$job->id}}"><input data-url="/admin/jobs/{{$job->id}}/toggle" type="checkbox" name="is_done" {{$job->is_done==1?"checked":""}}></td>
-                                    <td class="text-center">{{date('d/m/Y H:m', strtotime($job->deadline))}}</td>
+                                    <td class="text-center">{{date('d/m/Y H:i', strtotime($job->deadline))}}</td>
                                     <td class="text-left text-uppercase">{{$job->description}}</td>
                                     <td class="text-center">{{$job->user_name}}</td>
                                     <td class="text-center">{{$job->customer_name}}</td>

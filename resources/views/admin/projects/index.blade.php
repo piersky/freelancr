@@ -42,7 +42,7 @@
                             @foreach($projects as $project)
                                 <tr id="tr-{{$project->id}}" class="{{(!$project->is_active?"bg-secondary":"")}}">
                                     <td class="text-center text-uppercase"><strong>{{$project->name}}</strong></td>
-                                    <td class="text-center">{{$project->deadline_date!=""?date('m/d/Y H:m:s', strtotime($project->deadline_date)):""}}</td>
+                                    <td class="text-center">{{$project->deadline_date!=""?date('m/d/Y H:i:s', strtotime($project->deadline_date)):""}}</td>
                                     <td class="text-center">{{$project->description}}</td>
                                     <td class="text-center">{{$project->customer_name}}</td>
                                     <td class="d-flex justify-content-end">
