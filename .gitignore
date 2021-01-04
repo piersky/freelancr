@@ -11,4 +11,5 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /resources/views/welcome.blade.php
-/public/assets/img/ritratto_400.jpg
+/public/assets/img/*
+/public/assets/CV_ITA.pdf

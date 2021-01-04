@@ -5,6 +5,7 @@ $(function () {
         preventSubmit: true,
         submitError: function ($form, event, errors) {
             // additional error messages or events
+            console.log(errors);
         },
         submitSuccess: function ($form, event) {
             event.preventDefault(); // prevent default submit behaviour
