@@ -25,7 +25,7 @@
                         <div class="form-group col-sm-3">
                             <label for="belongs_to_id"><strong>{{__('jobs.Belongs to user')}}</strong></label>
                             <select id="belongs_to_id" name="belongs_to_id" class="form-control">
-                                <option>{{__('Select...')}}</option>
+                                <option value="">{{__('Select...')}}</option>
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}" {{Auth::user()->id==$user->id?"selected":""}}>{{$user->name}}</option>
                                 @endforeach
@@ -34,7 +34,7 @@
                         <div class="form-group col-6">
                             <label for="customer_id"><strong>{{__('jobs.Customer')}}</strong></label>
                             <select id="customer_id" name="customer_id" class="form-control">
-                                <option>{{__('Select...')}}</option>
+                                <option value="-1">{{__('Select...')}}</option>
                                 @foreach($customers as $customer)
                                     <option value="{{$customer->id}}">{{$customer->name}}</option>
                                 @endforeach

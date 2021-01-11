@@ -74,7 +74,7 @@ class JobController extends Controller
         $job->deadline = $request->input('deadline');
         $job->is_done = $request->input('is_done')=='on'?1:0;
         $job->belongs_to_id = $request->input('belongs_to_id')==""?Auth::user()->id:$request->input('belongs_to_id');
-        $job->customer_id = $request->input('customer_id');
+        $job->customer_id = $request->input('customer_id')=="-1"?0:$request->input('customer_id');
         $job->created_by = Auth::user()->id;
         $job->updated_by = Auth::user()->id;
 
@@ -127,7 +127,7 @@ class JobController extends Controller
         $job->deadline = $request->input('deadline');
         $job->is_done = $request->input('is_done')=='on'?1:0;
         $job->belongs_to_id = $request->input('belongs_to_id')==""?Auth::user()->id:$request->input('belongs_to_id');
-        $job->customer_id = $request->input('customer_id');
+        $job->customer_id = $request->input('customer_id')==""?null:$request->input('customer_id');
         $job->updated_by = Auth::user()->id;
 
         $job->save();
