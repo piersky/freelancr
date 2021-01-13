@@ -19,6 +19,7 @@ class CreateCustomersTable extends Migration
             $table->string('address')->nullable();
             $table->string('vat_number')->nullable();
             $table->string('fiscal_code')->nullable();
+            $table->string('unique_code')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->timestamps();

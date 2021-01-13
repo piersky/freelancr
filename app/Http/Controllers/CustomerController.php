@@ -48,6 +48,7 @@ class CustomerController extends Controller
         $customer->phone = $request->input('phone');
         $customer->vat_number = $request->input('vat_number');
         $customer->fiscal_code = $request->input('fiscal_code');
+        $customer->unique_code = $request->input('unique_code');
         $customer->is_active = ($request->input('is_active')=='on'?1:0);
         $customer->created_by = Auth::user()->id;
         $customer->updated_by = Auth::user()->id;
@@ -98,6 +99,7 @@ class CustomerController extends Controller
         $customer->phone = $request->input('phone');
         $customer->vat_number = $request->input('vat_number');
         $customer->fiscal_code = $request->input('fiscal_code');
+        $customer->unique_code = $request->input('unique_code');
         $customer->is_active = ($request->input('is_active')=='on'?1:0);
         $customer->updated_by = Auth::user()->id;
 

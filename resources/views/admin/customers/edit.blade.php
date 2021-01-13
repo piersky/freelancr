@@ -25,13 +25,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-4">
                             <label for="vat_number"><strong>{{__('customers.VAT Number')}}</strong></label>
                             <input type="text" name="vat_number" id="vat_number" class="form-control" value="{{$customer->vat_number}}">
                         </div>
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-4">
                             <label for="fiscal_code"><strong>{{__('customers.Fiscal Code')}}</strong></label>
                             <input type="text" name="fiscal_code" id="fiscal_code" class="form-control" value="{{$customer->fiscal_code}}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="unique_code"><strong>{{__('customers.Unique Code')}}</strong></label>
+                            <input type="text" name="unique_code" id="unique_code" class="form-control" value="{{$customer->unique_code}}">
                         </div>
                     </div>
                     <div class="row">

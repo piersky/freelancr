@@ -14,6 +14,7 @@ class Customer extends Model
         'address',
         'vat_number',
         'fiscal_code',
+        'unique_code',
         'phone',
         'email',
         'is_active',
