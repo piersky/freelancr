@@ -3,28 +3,20 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-sm-8">
-                <h1 class="text-uppercase">{{substr($post->title, 0, 30)}}...</h1>
+            <div class="col-sm-12">
+                <h1 class="text-uppercase">{{$post->title}}</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="row">
                     <div class="form-group col-sm-12">
-                        <label for="title"><strong>{{__('posts.Title')}}</strong></label>
-                        <input type="text" readonly name="title" id="title" class="form-control" value="{{$post->title}}">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-sm-12">
-                        <label for="content"><strong>{{__('posts.Content')}}</strong></label>
-                        <textarea readonly name="content" id="content" class="form-control" cols="5">{{$post->content}}</textarea>
+                        <p>{!! $post->content !!}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-group col-sm-12 mb-3">
-                        <label for="link"><strong>{{__('posts.Link')}}</strong></label>
-                        <input type="text" readonly name="link" id="link" class="form-control" value="{{$post->link}}">
+                        <a href="{{$post->link}}">{{$post->link}}</a>
                     </div>
                 </div>
                 <div class="row">
@@ -42,7 +34,8 @@
                     </div>
                 </div>
 
-                <a href="/admin/posts" class="btn btn-danger">{{__('Cancel')}}</a>
+                <a href="/admin/posts" class="btn btn-danger mr-3">{{__('Cancel')}}</a>
+                <a href="/admin/posts/{{$post->id}}/edit" class="btn btn-info ml-1"><span class="fa fa-pencil-alt"></span></a>
             </div>
         </div>
     </div>

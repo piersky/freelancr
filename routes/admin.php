@@ -7,7 +7,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HourStackController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ProjectController;
-use \App\Http\Controllers\PostController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CredentialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,4 +73,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('admin.posts.edit');
     Route::patch('/posts/{id}', [PostController::class, 'update'])->name('admin.posts.update');
     Route::get('/posts/{id}', [PostController::class, 'show'])->name('admin.posts.show');
+
+    Route::get('/credentials', [CredentialController::class, 'index'])->name('admin.credentials');
+    Route::get('/credentials/create', [CredentialController::class, 'create']);
+    Route::post('/credentials', [CredentialController::class, 'store']);
+    Route::get('/credentials/{id}', [CredentialController::class, 'show']);
 });

@@ -21,7 +21,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="content"><strong>{{__('posts.Content')}}*</strong></label>
-                            <textarea required name="content" id="content" class="form-control" cols="5">{{$post->content}}</textarea>
+                            <textarea required name="content" id="content" class="form-control" cols="80">{{$post->content}}</textarea>
                         </div>
                     </div>
                     <div class="row">
