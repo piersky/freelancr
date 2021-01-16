@@ -15,8 +15,8 @@ class CreateCredentialsTable extends Migration
     {
         Schema::create('credentials', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('credential_categories')->unsigned();
-            $table->foreign('credential_categories')->on('credential_categories')->references('id');
+            $table->bigInteger('credential_category_id')->unsigned();
+            $table->foreign('credential_category_id')->on('credential_categories')->references('id');
             $table->string('name');
             $table->string('host_name')->nullable();
             $table->string('user_name')->nullable();

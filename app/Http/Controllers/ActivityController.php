@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
-use App\Models\HourStack;
-use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
@@ -36,6 +34,7 @@ class ActivityController extends Controller
                 'customers.name AS customer_name'
             ])
             ->orderByDesc('activities.start_at')
+            //TODO: use settings
             ->paginate(20);
 
         $sum = $activities->sum('used_hours');

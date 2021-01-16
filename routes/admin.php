@@ -75,7 +75,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/posts/{id}', [PostController::class, 'show'])->name('admin.posts.show');
 
     Route::get('/credentials', [CredentialController::class, 'index'])->name('admin.credentials');
-    Route::get('/credentials/create', [CredentialController::class, 'create']);
+    Route::get('/credentials/create', [CredentialController::class, 'create'])->name('admin.credentials.create');
     Route::post('/credentials', [CredentialController::class, 'store']);
     Route::get('/credentials/{id}', [CredentialController::class, 'show']);
+    Route::get('/credentials/{id}/edit', [CredentialController::class, 'edit'])->name('admin.credentials.edit');
+    Route::patch('/credentials/{id}', [CredentialController::class, 'update'])->name('admin.credentials.update');
 });

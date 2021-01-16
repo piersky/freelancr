@@ -4,13 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8">
-                <h1 class="text-uppercase">{{__('credentials.New credential')}}</h1>
+                <h1 class="text-uppercase">{{$credential->name}}</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <form action="{{route('admin.credentials')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('admin.credentials.update', ['id' => $credential->id])}}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
+                    @method('PATCH')
                     <div class="row">
                         <div class="form-group col-sm-1">
                             <label for="credential_category_id"><strong>{{__('credentials.Category')}}*</strong></label>
@@ -19,7 +20,7 @@
                             <select id="credential_category_id" name="credential_category_id" class="form-control">
                                 <option>{{__('Select...')}}</option>
                                 @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option value="{{$category->id}}" {{$credential->credential_category_id==$category->id?"selected":""}}>{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -29,7 +30,7 @@
                             <label for="name"><strong>{{__('credentials.Name')}}*</strong></label>
                         </div>
                         <div class="form-group col-sm-4">
-                            <input type="text" required name="name" id="name" class="form-control" value="{{old('name')}}">
+                            <input type="text" required name="name" id="name" class="form-control" value="{{$credential->name}}">
                         </div>
                     </div>
                     <div class="row">
@@ -37,7 +38,7 @@
                             <label for="host_name"><strong>{{__('credentials.Host')}}</strong></label>
                         </div>
                         <div class="form-group col-sm-4">
-                            <input type="text"  name="host_name" id="host_name" class="form-control" value="{{old('host_name')}}">
+                            <input type="text"  name="host_name" id="host_name" class="form-control" value="{{$credential->host_name}}">
                         </div>
                     </div>
                     <div class="row">
@@ -45,7 +46,7 @@
                             <label for="user_name"><strong>{{__('credentials.User name')}}</strong></label>
                         </div>
                         <div class="form-group col-sm-4">
-                            <input type="text"  name="user_name" id="user_name" class="form-control" value="{{old('user_name')}}">
+                            <input type="text"  name="user_name" id="user_name" class="form-control" value="{{$credential->user_name}}">
                         </div>
                     </div>
                     <div class="row">
@@ -53,7 +54,7 @@
                             <label for="password"><strong>{{__('credentials.Password')}}</strong></label>
                         </div>
                         <div class="form-group col-sm-4">
-                            <input type="text"  name="password" id="password" class="form-control" value="{{old('password')}}">
+                            <input type="text"  name="password" id="password" class="form-control" value="{{$credential->password}}">
                         </div>
                     </div>
                     <div class="row">
@@ -61,18 +62,18 @@
                             <label for="description"><strong>{{__('credentials.Description')}}</strong></label>
                         </div>
                         <div class="form-group col-sm-4">
-                            <input type="text" name="description" id="description" class="form-control" value="{{old('description')}}">
+                            <input type="text" name="description" id="description" class="form-control" value="{{$credential->description}}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-1">
-                            <label for="customer_id"><strong>{{__('credentials.Customer')}}*</strong></label>
+                            <label for="customer_id"><strong>{{__('credentials.Customer')}}</strong></label>
                         </div>
                         <div class="form-group col-sm-4">
                             <select id="customer_id" name="customer_id" class="form-control">
                                 <option>{{__('Select...')}}</option>
                                 @foreach($customers as $customer)
-                                    <option value="{{$customer->id}}">{{$customer->name}}</option>
+                                    <option value="{{$customer->id}}" {{$credential->customer_id==$customer->id?"selected":""}}>{{$customer->name}}</option>
                                 @endforeach
                             </select>
                         </div>

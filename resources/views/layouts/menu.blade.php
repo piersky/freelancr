@@ -49,6 +49,12 @@
                         <p><span>{{__('Hour stacks')}}</span></p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route("admin.credentials") }}" class="nav-link {{ request()->is('admin/credentials') || request()->is('admin/credentials/*') ? 'active' : '' }}">
+                        <i class="fa-fw fas fa-key"></i>
+                        <p><span>{{__('Credentials')}}</span></p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
