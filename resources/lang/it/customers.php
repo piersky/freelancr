@@ -11,5 +11,6 @@ return [
     'Email' => 'Email',
     'Phone' => 'Telefono',
     'Is active' => 'Attivo',
-    'Edit Customer' => 'Modifica cliente'
+    'Edit Customer' => 'Modifica cliente',
+    'Unique Code' => 'Codice univoco',
 ];

@@ -10,5 +10,6 @@ return [
     'Description' => 'Descrizione',
     'Add new credential' => 'Aggiungi credenziale',
     'New credential' => 'Nuova credenziale',
-    'Customer' => 'Cliente'
+    'Customer' => 'Cliente',
+    'Generate' => 'Genera'
 ];

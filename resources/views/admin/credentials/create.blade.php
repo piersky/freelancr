@@ -17,7 +17,7 @@
                         </div>
                         <div class="form-group col-sm-4">
                             <select id="credential_category_id" name="credential_category_id" class="form-control">
-                                <option>{{__('Select...')}}</option>
+                                <option value="">{{__('Select...')}}</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
@@ -55,6 +55,9 @@
                         <div class="form-group col-sm-4">
                             <input type="text"  name="password" id="password" class="form-control" value="{{old('password')}}">
                         </div>
+                        <div class="form-group col-sm-1">
+                            <button type="submit" class="btn btn-warning text-uppercase" id="generate_password">{{__('credentials.Generate')}}</button>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-1">
@@ -70,7 +73,7 @@
                         </div>
                         <div class="form-group col-sm-4">
                             <select id="customer_id" name="customer_id" class="form-control">
-                                <option>{{__('Select...')}}</option>
+                                <option value="">{{__('Select...')}}</option>
                                 @foreach($customers as $customer)
                                     <option value="{{$customer->id}}">{{$customer->name}}</option>
                                 @endforeach
@@ -87,8 +90,30 @@
 @section('footer')
     @parent
     <script>
+        function randPassword(letters, numbers, either) {
+            var chars = [
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", // letters
+                "0123456789", // numbers
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_%#@!£&" // either
+            ];
+
+            return [letters, numbers, either].map(function(len, i) {
+                return Array(len).fill(chars[i]).map(function(x) {
+                    return x[Math.floor(Math.random() * x.length)];
+                }).join('');
+            }).concat().join('').split('').sort(function(){
+                return 0.5-Math.random();
+            }).join('')
+        }
+
         $('document').ready(function () {
             $('div.alert').fadeOut(5000);
+
+            $('#generate_password').on('click', function (){
+               var newPass = randPassword(5,3,2);
+
+               $('#password').val(newPass);
+            });
         })
     </script>
 @endsection

@@ -24,9 +24,25 @@ class CredentialController extends Controller
             ])
             //TODO: change accordingly with settings
             ->where('cc.lang_id', '=', 'it')
+            ->orderByDesc('c.id')
             ->paginate('50');
 
-        return view('admin.credentials.index', ['credentials' => $creds]);
+        $categories = DB::table('credential_categories')
+            //TODO: use settings
+            ->where('lang_id', '=', 'it')
+            ->orderBy('name')
+            ->get();
+
+        $customers = DB::table('customers')
+            ->where('is_active', '=', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.credentials.index', [
+            'credentials' => $creds,
+            'categories' => $categories,
+            'customers' => $customers
+        ]);
     }
 
     /**
@@ -78,7 +94,7 @@ class CredentialController extends Controller
 
         $credential->save();
 
-        return redirect('admin.credentials')->with('success', 'Credentials saved');
+        return redirect('/admin/credentials')->with('success', 'Credentials saved');
     }
 
     /**
@@ -142,7 +158,20 @@ class CredentialController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $credential = Credential::find($id);
+
+        $credential['credential_category_id'] = $request->input('credential_category_id');
+        $credential['name'] = $request->input('name');
+        $credential['host_name'] = $request->input('host_name');
+        $credential['user_name'] = $request->input('user_name');
+        $credential['password'] = $request->input('password');
+        $credential['description'] = $request->input('description');
+        $credential['customer_id'] = $request->input('customer_id')==""?null:$request->input('customer_id');
+        $credential->updated_by = Auth::user()->id;
+
+        $credential->save();
+
+        return redirect('/admin/credentials')->with('success', 'Credentials updated');
     }
 
     /**
@@ -154,5 +183,62 @@ class CredentialController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function filter(Request $request){
+        $category_id = $request->input('credential_category_id');
+
+        $creds = DB::table('credentials AS c')
+            ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
+            ->select([
+                'c.*',
+                'cc.name AS category',
+            ])
+            //TODO: change accordingly with settings
+            ->where('cc.lang_id', '=', 'it');
+
+        if ($request->input('credential_category_id') != "") {
+            $creds = $creds->where('credential_category_id', '=', $request->input('credential_category_id'));
+        }
+
+        if ($request->input('name') != "") {
+            $creds = $creds->where('name', '=', $request->input('name'));
+        }
+
+        if ($request->input('host_name') != "") {
+            $creds = $creds->where('host_name', '=', $request->input('host_name'));
+        }
+
+        if ($request->input('user_name') != "") {
+            $creds = $creds->where('user_name', '=', $request->input('user_name'));
+        }
+
+        if ($request->input('description') != "") {
+            $creds = $creds->where('description', '=', $request->input('description'));
+        }
+
+        if ($request->input('customer_id') != "") {
+            $creds = $creds->where('customer_id', '=', $request->input('customer_id'));
+        }
+
+        $creds = $creds->orderByDesc('c.id')
+            ->paginate('50');
+
+        $categories = DB::table('credential_categories')
+            //TODO: use settings
+            ->where('lang_id', '=', 'it')
+            ->orderBy('name')
+            ->get();
+
+        $customers = DB::table('customers')
+            ->where('is_active', '=', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.credentials.index', [
+            'credentials' => $creds,
+            'categories' => $categories,
+            'customers' => $customers
+        ]);
     }
 }

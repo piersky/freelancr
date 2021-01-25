@@ -18,7 +18,7 @@
                         </div>
                         <div class="form-group col-sm-4">
                             <select id="credential_category_id" name="credential_category_id" class="form-control">
-                                <option>{{__('Select...')}}</option>
+                                <option value="">{{__('Select...')}}</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}" {{$credential->credential_category_id==$category->id?"selected":""}}>{{$category->name}}</option>
                                 @endforeach
@@ -71,7 +71,7 @@
                         </div>
                         <div class="form-group col-sm-4">
                             <select id="customer_id" name="customer_id" class="form-control">
-                                <option>{{__('Select...')}}</option>
+                                <option value="">{{__('Select...')}}</option>
                                 @foreach($customers as $customer)
                                     <option value="{{$customer->id}}" {{$credential->customer_id==$customer->id?"selected":""}}>{{$customer->name}}</option>
                                 @endforeach
