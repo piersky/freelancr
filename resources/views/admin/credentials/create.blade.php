@@ -56,7 +56,7 @@
                             <input type="text"  name="password" id="password" class="form-control" value="{{old('password')}}">
                         </div>
                         <div class="form-group col-sm-1">
-                            <button type="submit" class="btn btn-warning text-uppercase" id="generate_password">{{__('credentials.Generate')}}</button>
+                            <a class="btn btn-warning text-uppercase" id="generate_password">{{__('credentials.Generate')}}</a>
                         </div>
                     </div>
                     <div class="row">
