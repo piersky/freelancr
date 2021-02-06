@@ -64,7 +64,7 @@
                 <div class="modal-body">
                     {{__('Please filter.')}}
                     <div class="row align-content-center">
-                        <form action="{{route('admin.credentials.filter', ['id' => $credential->id])}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('admin.credentials.filter')}}" method="POST" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="container">
                                 <div class="row">

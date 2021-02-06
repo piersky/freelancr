@@ -186,8 +186,6 @@ class CredentialController extends Controller
     }
 
     public function filter(Request $request){
-        $category_id = $request->input('credential_category_id');
-
         $creds = DB::table('credentials AS c')
             ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
             ->select([
