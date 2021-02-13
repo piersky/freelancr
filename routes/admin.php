@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/activities/{hsid}/filter', [ActivityController::class, 'filter'])->name('admin.activities.filter');
     Route::get('/activities/{id}', [ActivityController::class, 'show'])->name('admin.activities.show');
     Route::get('/activities/store_and_new', [ActivityController::class, 'storeAndNew'])->name('admin.activities.store_and_new');
+    Route::get('/activities/hourstack_by_customer/{customer}', [ActivityController::class, 'hourstackByCustomer'])->name('admin.activities.hourstack_by_customer');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('admin.projects');
     Route::get('/projects/create', [ProjectController::class, 'create'])->name('admin.projects.create');

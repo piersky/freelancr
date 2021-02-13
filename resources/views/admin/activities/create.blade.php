@@ -51,11 +51,11 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            <label for="projetc_id"><strong>{{__('activities.Project')}}*</strong></label>
-                            <select id="project_id" name="project_id" class="form-control">
-                                <option>{{__('Select...')}}</option>
-                                @foreach($projects as $project)
-                                    <option value="{{$project->id}}">{{$project->customer_name}} -> {{$project->name}}</option>
+                            <label for="customer_id"><strong>{{__('activities.Customer name')}}*</strong></label>
+                            <select required id="customer_id" name="customer_id" class="form-control">
+                                <option value="">{{__('Select...')}}</option>
+                                @foreach($customers as $customer)
+                                    <option value="{{$customer->id}}">{{$customer->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -63,11 +63,16 @@
                             <label for="hourstack_id"><strong>{{__('activities.Hour stack')}}*</strong></label>
                             <select id="hourstack_id" name="hourstack_id" class="form-control">
                                 <option>{{__('Select...')}}</option>
-                                @foreach($hour_stacks as $hour_stack)
-                                    <option value="{{$hour_stack->id}}">{{$hour_stack->customer_name}} -> {{$hour_stack->name}}</option>
-                                @endforeach
                             </select>
                         </div>
+                        <div class="form-group col-sm-3">
+                            <label for="projetc_id"><strong>{{__('activities.Project')}}*</strong></label>
+                            <select id="project_id" name="project_id" class="form-control">
+                                <option>{{__('Select...')}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-3">
                             <label for="assigned_to"><strong>{{__('activities.Assigned to')}}</strong></label>
                             <select id="assigned_to" name="assigned_to" class="form-control">
@@ -77,8 +82,6 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col-1">
                             <label for="is_active"><strong>{{__('activities.Is active')}}</strong></label>
                             <input type="checkbox" checked name="is_active" id="is_active" class="form-control">
@@ -122,6 +125,42 @@
                 var hours = diff_days * 24 + diff_hours + Math.round(diff_mins * 10 / 60) / 10;
 
                 $('#used_hours').val(hours.toFixed(1));
+            })
+
+            $('#customer_id').change(function (){
+                var customer = $('#customer_id').val();
+                var url = '/admin/activities/hourstack_by_customer/' + customer;
+                var hourstack = $('#hourstack_id');
+                var project = $('#project_id');
+
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    data: {
+                        '_token': '{{csrf_token()}}'
+                    },
+                    complete: function (response){
+                        hourstack.empty();
+                        project.empty();
+
+                        var data = JSON.parse(response.responseText);
+                        var hourstacks = data['hourstacks'];
+                        var projects = data['projects'];
+
+                        for (var i=0; i<hourstacks.length; i++){
+                            var new_option = $("<option />");
+                            new_option.attr('value', hourstacks[i].id);
+                            new_option.text(hourstacks[i].name);
+                            hourstack.append(new_option);
+                        }
+                        for (var i=0; i<projects.length; i++){
+                            var new_option = $("<option />");
+                            new_option.attr('value', projects[i].id);
+                            new_option.text(projects[i].name);
+                            project.append(new_option);
+                        }
+                    }
+                })
             })
         })
     </script>

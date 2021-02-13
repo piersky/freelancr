@@ -51,35 +51,38 @@ class ActivityController extends Controller
     {
         $activity = new Activity();
 
-        $projects = DB::table('projects')
-            ->join('customers', 'projects.customer_id', '=', 'customers.id')
-            ->select([
-                'projects.*',
-                'customers.name AS customer_name'
-            ])
-            ->where('projects.is_active', '=', 1)
-            ->orderBy('customers.name')
-            ->orderby('projects.name')
-            ->get();
-
-        $hour_stacks = DB::table('hour_stacks')
-            ->join('customers', 'hour_stacks.customer_id', '=', 'customers.id')
-            ->select([
-                'hour_stacks.*',
-                'customers.name AS customer_name'
-            ])
-            ->where('hour_stacks.is_active', '=', 1)
-            ->orderby('customers.name')
+        $customers = DB::table('customers')
+            ->where('is_active', '=', 1)
+            ->orderBy('name')
             ->get();
 
         $users = User::all();
 
         return view('admin.activities.create', [
             'activity' => $activity,
-            'projects' => $projects,
-            'hour_stacks' => $hour_stacks,
+            'customers' => $customers,
             'users' => $users
         ]);
+    }
+
+    public function hourstackByCustomer($customer){
+        $hour_stacks = DB::table('hour_stacks')
+            ->where('is_active', '=', 1)
+            ->where('customer_id', '=', $customer)
+            ->orderby('name')
+            ->get();
+
+        $projects = DB::table('projects')
+            ->where('is_active', '=', 1)
+            ->where('customer_id', '=', $customer)
+            ->orderby('name')
+            ->get();
+
+        $result['hourstacks'] = $hour_stacks;
+        $result['projects'] = $projects;
+
+        if (\request()->ajax()) return ''.json_encode($result);
+        else return redirect()->back();
     }
 
     /**
