@@ -31,7 +31,7 @@
                     <h4>{{__('Last activities')}}</h4>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{__('Jobs for')}} {{Auth::user()->name}}</h5>
+                    <h5 class="card-title">{{__('Activities')}} {{Auth::user()->name}}</h5>
                     <table>
                         @foreach($activities as $activity)
                             <tr>

@@ -58,8 +58,10 @@ class AdminController extends Controller
     }
 
     public function graphData(){
-        $result = DB::table('activities', 'a')
-            ->limit(30)
+        $result = DB::table('activities')
+            ->selectRaw('YEAR(start_at) year, MONTH(start_at) month, DAY(start_at) day, SUM(used_hours) hours')
+            ->whereRaw('start_at BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()')
+            ->groupByRaw('YEAR(start_at), MONTH(start_at), DAY(start_at)')
             ->get();
 
         if (request()->ajax()) return '' . $result;
