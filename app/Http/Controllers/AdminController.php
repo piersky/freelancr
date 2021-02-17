@@ -44,6 +44,25 @@ class AdminController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.index', ['jobs' => $jobs, 'customers' => $customers]);
+        $activities = DB::table('activities', 'a')
+            ->select('a.*')
+            ->orderByDesc('a.start_at')
+            ->limit(5)
+            ->get();
+
+        return view('admin.index', [
+            'jobs' => $jobs,
+            'customers' => $customers,
+            'activities' => $activities
+        ]);
+    }
+
+    public function graphData(){
+        $result = DB::table('activities', 'a')
+            ->limit(30)
+            ->get();
+
+        if (request()->ajax()) return '' . $result;
+        else return redirect()->back();
     }
 }

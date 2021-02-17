@@ -69,7 +69,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Version 0.1</b>
         </div>
-        <strong><small>&copy; 2020 Pier Luigi Papeschi - <a href="https://pierluigipapeschi.com">www.pierluigipapeschi.com</a></small></strong>
+        <strong><small>&copy; 2021 Pier Luigi Papeschi - <a href="https://pierluigipapeschi.com">www.pierluigipapeschi.com</a></small></strong>
     </footer>
     <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}

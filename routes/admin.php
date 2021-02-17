@@ -25,6 +25,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', [AdminController::class, 'index'])->name('admin');
+    Route::POST('/graph', [AdminController::class, 'graphData'])->name('admin.graph');
 
     Route::get('/jobs', [JobController::class, 'index'])->name('admin.jobs');
     Route::get('/jobs/create', [JobController::class, 'create'])->name('admin.jobs.create');
