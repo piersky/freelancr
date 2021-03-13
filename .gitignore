@@ -13,3 +13,4 @@ yarn-error.log
 /resources/views/welcome.blade.php
 /public/assets/img/*
 /public/assets/CV_ITA.pdf
+/public/assets/CV_ENG.pdf

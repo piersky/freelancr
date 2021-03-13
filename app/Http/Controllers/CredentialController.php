@@ -190,9 +190,11 @@ class CredentialController extends Controller
     public function filter(Request $request){
         $creds = DB::table('credentials AS c')
             ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
+            ->join('customers AS cu', 'c.customer_id', '=', 'cu.id')
             ->select([
                 'c.*',
                 'cc.name AS category',
+                'cu.name AS customer',
             ])
             //TODO: change accordingly with settings
             ->where('cc.lang_id', '=', 'it');
