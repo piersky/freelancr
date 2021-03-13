@@ -17,6 +17,13 @@
                 </button>
             </div>
         </div>
+        @if($credentials ?? '')
+            <div class="row">
+                <div class="col-sm-4 my-2 justify-content-end">
+                    {{$credentials->links()}}
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive">
@@ -25,22 +32,22 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th class="text-center text-uppercase">{{__('credentials.Category')}}</th>
+                                <th class="text-center text-uppercase">{{__('credentials.Customer')}}</th>
                                 <th class="text-center text-uppercase">{{__('credentials.Name')}}</th>
                                 <th class="text-center text-uppercase">{{__('credentials.Host')}}</th>
                                 <th class="text-center text-uppercase">{{__('credentials.User name')}}</th>
                                 <th class="text-center text-uppercase">{{__('credentials.Password')}}</th>
-                                <th class="text-center text-uppercase">{{__('credentials.Description')}}</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($credentials as $credential)
                                 <tr id="tr-{{$credential->id}}" onclick="location.href='/admin/credentials/{{$credential->id}}';">
                                     <td class="text-center"><strong>{{$credential->category}}</strong></td>
+                                    <td class="text-center">{{$credential->customer}}</td>
                                     <td class="text-center">{{$credential->name}}</td>
                                     <td class="text-center">{{$credential->host_name}}</td>
                                     <td class="text-center">{{$credential->user_name}}</td>
                                     <td class="text-center">{{$credential->password}}</td>
-                                    <td class="text-center">{{$credential->description}}</td>
                                 </tr>
                             @endforeach
                             @else
@@ -50,6 +57,13 @@
                     </table>
                 </div>
             </div>
+            @if($credentials ?? '')
+                <div class="row">
+                    <div class="col-sm-4 my-2 justify-content-end">
+                        {{$credentials->links()}}
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">

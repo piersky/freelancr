@@ -17,9 +17,8 @@
         complete: function(resp){
             var labels = [];
             var dataset = [];
-            var dates = [];
 
-            dates = $.parseJSON(resp.responseText)
+            var dates = $.parseJSON(resp.responseText)
             dates.reverse;
 
             var currentTime = new Date();
