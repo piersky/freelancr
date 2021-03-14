@@ -6,6 +6,7 @@ use App\Models\Credential;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Valuestore\Valuestore;
 
 class CredentialController extends Controller
 {
@@ -16,6 +17,8 @@ class CredentialController extends Controller
      */
     public function index()
     {
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
         $creds = DB::table('credentials AS c')
             ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
             ->join('customers AS cu', 'c.customer_id', '=', 'cu.id')
@@ -25,7 +28,13 @@ class CredentialController extends Controller
                 'cu.name AS customer'
             ])
             //TODO: change accordingly with settings
-            ->where('cc.lang_id', '=', 'it')
+            ->where('cc.lang_id', '=', 'it');
+
+        if ($settings->has('credential_filter_customer_id')) {
+            $creds = $creds->where('c.customer_id', '=', $settings->get('credential_filter_customer_id'));
+        }
+
+        $creds = $creds
             ->orderByDesc('c.id')
             ->paginate('50');
 
@@ -199,6 +208,8 @@ class CredentialController extends Controller
             //TODO: change accordingly with settings
             ->where('cc.lang_id', '=', 'it');
 
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
         if ($request->input('credential_category_id') != "") {
             $creds = $creds->where('credential_category_id', '=', $request->input('credential_category_id'));
         }
@@ -221,6 +232,7 @@ class CredentialController extends Controller
 
         if ($request->input('customer_id') != "") {
             $creds = $creds->where('customer_id', '=', $request->input('customer_id'));
+            $settings->put('credential_filter_customer_id', $request->input('customer_id'));
         }
 
         $creds = $creds->orderByDesc('c.id')
