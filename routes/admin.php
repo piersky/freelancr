@@ -9,6 +9,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CredentialController;
+use App\Http\Controllers\DeadlineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,4 +84,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/credentials/{id}/edit', [CredentialController::class, 'edit'])->name('admin.credentials.edit');
     Route::patch('/credentials/{id}', [CredentialController::class, 'update'])->name('admin.credentials.update');
     Route::post('/credentials/filter', [CredentialController::class, 'filter'])->name('admin.credentials.filter');
+
+    Route::get('/deadlines', [DeadlineController::class, 'index'])->name('admin.deadlines');
+    Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('admin.deadlines.create');
+    Route::post('/deadlines', [DeadlineController::class, 'store']);
+    Route::get('/deadlines/{id}', [DeadlineController::class, 'show']);
+    Route::get('/deadlines/{id}/edit', [DeadlineController::class, 'edit'])->name('admin.deadlines.edit');
+    Route::patch('/deadlines/{id}', [DeadlineController::class, 'update'])->name('admin.deadlines.update');
+    Route::post('/deadlines/filter', [DeadlineController::class, 'filter'])->name('admin.deadlines.filter');
 });

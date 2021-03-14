@@ -55,6 +55,12 @@
                         <p><span>{{__('Credentials')}}</span></p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route("admin.deadlines") }}" class="nav-link {{ request()->is('admin/deadlines') || request()->is('admin/deadlines/*') ? 'active' : '' }}">
+                        <i class="fa-fw fas fa-calendar-alt"></i>
+                        <p><span>{{__('Deadlines')}}</span></p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
