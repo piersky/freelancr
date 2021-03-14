@@ -5,9 +5,11 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
+use App\Settings;
 
 class AppServiceProvider extends ServiceProvider
 {
+    public $settings;
     /**
      * Register any application services.
      *
@@ -15,7 +17,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->settings = $this->app->singleton(Settings::class, function () {
+            return Settings::make(storage_path('app/settings.json'));
+        });
     }
 
     /**

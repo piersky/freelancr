@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Credential;
+use App\Settings;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
-use Spatie\Valuestore\Valuestore;
+
 
 class CredentialController extends Controller
 {
@@ -15,10 +16,8 @@ class CredentialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Settings $settings)
     {
-        $settings = Valuestore::make(storage_path('app/settings.json'));
-
         $creds = DB::table('credentials AS c')
             ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
             ->join('customers AS cu', 'c.customer_id', '=', 'cu.id')
@@ -52,7 +51,8 @@ class CredentialController extends Controller
         return view('admin.credentials.index', [
             'credentials' => $creds,
             'categories' => $categories,
-            'customers' => $customers
+            'customers' => $customers,
+            'customer_id' => ($settings->has('credential_filter_customer_id')?$settings->get('credential_filter_customer_id'):""),
         ]);
     }
 
@@ -196,7 +196,7 @@ class CredentialController extends Controller
         //
     }
 
-    public function filter(Request $request){
+    public function filter(Request $request, Settings $settings){
         $creds = DB::table('credentials AS c')
             ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
             ->join('customers AS cu', 'c.customer_id', '=', 'cu.id')
@@ -207,8 +207,6 @@ class CredentialController extends Controller
             ])
             //TODO: change accordingly with settings
             ->where('cc.lang_id', '=', 'it');
-
-        $settings = Valuestore::make(storage_path('app/settings.json'));
 
         if ($request->input('credential_category_id') != "") {
             $creds = $creds->where('credential_category_id', '=', $request->input('credential_category_id'));
@@ -233,6 +231,8 @@ class CredentialController extends Controller
         if ($request->input('customer_id') != "") {
             $creds = $creds->where('customer_id', '=', $request->input('customer_id'));
             $settings->put('credential_filter_customer_id', $request->input('customer_id'));
+        } else {
+            $settings->forget('credential_filter_customer_id');
         }
 
         $creds = $creds->orderByDesc('c.id')
@@ -252,7 +252,8 @@ class CredentialController extends Controller
         return view('admin.credentials.index', [
             'credentials' => $creds,
             'categories' => $categories,
-            'customers' => $customers
+            'customers' => $customers,
+            'customer_id' => ($settings->has('credential_filter_customer_id')?$settings->get('credential_filter_customer_id'):""),
         ]);
     }
 }
