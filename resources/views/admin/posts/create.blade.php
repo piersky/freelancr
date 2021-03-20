@@ -20,7 +20,14 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="content"><strong>{{__('posts.Content')}}*</strong></label>
-                            <textarea required name="content" id="content" class="form-control" cols="80"></textarea>
+                            <textarea name="content" id="content" class="form-control content" cols="80"></textarea>
+                            <script src="{{ asset('node_modules/tinymce/tinymce.js') }}"></script>
+                            <script>
+                                tinymce.init({
+                                    selector:'textarea.content',
+                                    height: 500
+                                });
+                            </script>
                         </div>
                     </div>
                     <div class="row">

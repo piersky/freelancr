@@ -256,4 +256,8 @@ class CredentialController extends Controller
             'customer_id' => ($settings->has('credential_filter_customer_id')?$settings->get('credential_filter_customer_id'):""),
         ]);
     }
+
+    public function reset_filter(Request $request, Settings $settings){
+
+    }
 }

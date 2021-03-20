@@ -11,7 +11,10 @@
             <div class="col-sm-4">
                 <h1 class="text-uppercase">{{__('credentials.Credentials')}}</h1>
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-danger" id="btn-reset">
+                    <span class="fa fa-times"></span>
+                </button>
                 <button type="button" class="btn btn-success" id="btn-filter">
                     <span class="fa fa-filter"></span>
                 </button>
@@ -178,6 +181,24 @@
                         }
                     }
                 });
+            });
+        });
+        $('#btn-reset').on('click', function (evt) {
+            evt.preventDefault();
+            var url = '/admin/credentials/reset-filter';
+            $.ajax({
+                url: url,
+                method: 'post',
+                data: {
+                    '_token': '{{csrf_token()}}'
+                },
+                complete: function (resp) {
+                    if (resp.responseText == 1) {
+                        console.log('OK');
+                    } else {
+                        console.log('Problem contacting the server');
+                    }
+                }
             });
         });
     </script>

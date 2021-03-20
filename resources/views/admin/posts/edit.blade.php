@@ -21,11 +21,20 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="content"><strong>{{__('posts.Content')}}*</strong></label>
-                            <textarea required name="content" id="content" class="form-control" cols="80">{{$post->content}}</textarea>
+                            <textarea required name="content" id="content" class="form-control content" cols="80">{{$post->content}}</textarea>
+                            <script src="{{ asset('node_modules/tinymce/tinymce.js') }}"></script>
+                            <script>
+                                tinymce.init({
+                                    selector:'textarea.content',
+                                    height: 500,
+                                    plugins: 'code',
+                                    menubar: 'file edit insert view format table tools code help'
+                                });
+                            </script>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-group col-sm-12 mb-3">
+                        <div class="form-group col-sm-12 mb-3">
                             <label for="link"><strong>{{__('posts.Link')}}</strong></label>
                             <input type="text" name="link" id="link" class="form-control" value="{{old('link', $post->link)}}">
                         </div>

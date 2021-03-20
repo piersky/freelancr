@@ -20,6 +20,7 @@ class ProjectController extends Controller
         $projects = DB::table('projects')
             ->join('customers', 'projects.customer_id', '=', 'customers.id')
             ->select('projects.*', 'customers.name AS customer_name')
+            ->orderByDesc('projects.is_active')
             ->orderByDesc('updated_at')
             ->paginate(20);
 
@@ -38,7 +39,10 @@ class ProjectController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.projects.create', ['project' => $project, 'customers' => $customers]);
+        return view('admin.projects.create', [
+            'project' => $project,
+            'customers' => $customers
+        ]);
     }
 
     /**
@@ -84,11 +88,13 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::find($id);
-        $customers = Customer::where('is_active', '=', 1)
-            ->orderBy('name')
-            ->get();
 
-        return view('admin.projects.edit', ['project' => $project, 'customers' => $customers]);
+        $customers = Customer::orderBy('name')->get();
+
+        return view('admin.projects.edit', [
+            'project' => $project,
+            'customers' => $customers
+        ]);
     }
 
     /**
