@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/hourstacks', [HourStackController::class, 'store']);
     Route::get('/hourstacks/{id}/edit', [HourStackController::class, 'edit'])->name('admin.hourstacks.edit');
     Route::patch('/hourstacks/{id}', [HourStackController::class, 'update'])->name('admin.hourstacks.update');
+    Route::get('/hourstacks/{id}/excel', [HourStackController::class, 'excel'])->name('admin.hourstacks.excel');
 
     Route::get('/posts', [PostController::class, 'index'])->name('admin.posts');
     Route::get('/posts/create', [PostController::class, 'create'])->name('admin.posts.create');

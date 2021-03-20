@@ -7,6 +7,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use App\Exports\HourstackExport;
 
 class HourStackController extends Controller
 {
@@ -140,5 +141,10 @@ class HourStackController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function excel($id)
+    {
+        return \Excel::download(new HourstackExport($id), 'hourstack.xlsx');
     }
 }

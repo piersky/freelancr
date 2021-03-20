@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-sm-12">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         @if($hourstacks ?? '')
@@ -50,6 +50,7 @@
                                     <td class="d-flex justify-content-end">
                                         <a href="/admin/activities/{{$hourstack->id}}/filter" class="btn btn-success mr-1"><span class="fa fa-eye"></span></a>
                                         <a href="/admin/hourstacks/{{$hourstack->id}}/edit" class="btn btn-info ml-1"><span class="fa fa-pencil-alt"></span></a>
+                                        <a href="/admin/hourstacks/{{$hourstack->id}}/excel" class="btn btn-danger ml-1"><span class="fa fa-file-excel"></span></a>
                                 </tr>
                             @endforeach
                             <tr><td></td><td></td><td></td><td></td><td class="text-center">@money($total)</td><td></td></tr>
