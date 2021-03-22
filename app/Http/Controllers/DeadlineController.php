@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DeadlineController extends Controller
 {
@@ -13,7 +14,19 @@ class DeadlineController extends Controller
      */
     public function index()
     {
-        //
+        $deadlines = DB::table('deadlines', 'd')
+            ->join('customers AS c', 'd.customer_id', '=', 'd.id')
+            ->join('deadline_categories AS dc', 'd.deadline_category_id', '=', 'dc.id')
+            ->select([
+                'd.*',
+                'c.name AS customer_name',
+                'dc.name AS category_name'
+            ])
+            ->paginate();
+
+        return view('admin.deadlines.index', [
+            'deadlines' => $deadlines,
+        ]);
     }
 
     /**

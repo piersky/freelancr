@@ -54,7 +54,7 @@
                                 </tr>
                             @endforeach
                             @else
-                                <tr><td><h2>{{__('credentials.No posts yet.')}}</h2></td></tr>
+                                <tr><td><h2>{{__('credentials.No credentials yet.')}}</h2></td></tr>
                             </tbody>
                         @endif
                     </table>
