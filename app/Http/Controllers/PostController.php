@@ -33,7 +33,14 @@ class PostController extends Controller
             ->orderByDesc('posts.updated_at')
             ->paginate(20);
 
-        return view('admin.posts.index', ['posts' => $posts]);
+        $categories = ProjectCategory::where('is_active', '=', 1)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.posts.index', [
+            'posts' => $posts,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -44,12 +51,18 @@ class PostController extends Controller
     public function create()
     {
         $post = new Post();
+
         $users = User::all();
+
         $categories = ProjectCategory::where('is_active', '=', 1)
             ->orderBy('name')
             ->get();
 
-        return view('admin.posts.create', ['posts' => $post, 'users' => $users, 'categories' => $categories]);
+        return view('admin.posts.create', [
+            'posts' => $post,
+            'users' => $users,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -97,9 +110,9 @@ class PostController extends Controller
                 'project_categories.name AS category_name'
             ])
             ->where('posts.id', '=', $id)
-            ->get();
+            ->first();
 
-        return view('admin.posts.show', ['post' => $post[0]]);
+        return view('admin.posts.show', ['post' => $post]);
     }
 
     /**
@@ -111,12 +124,18 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+
         $users = User::all();
+
         $categories = ProjectCategory::where('is_active', '=', 1)
             ->orderBy('name')
             ->get();
 
-        return view('admin.posts.edit', ['post' => $post, 'users' => $users, 'categories' => $categories]);
+        return view('admin.posts.edit', [
+            'post' => $post,
+            'users' => $users,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -152,5 +171,33 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function filter($param)
+    {
+        $posts = DB::table('posts')
+            ->join('users', 'posts.author_id', '=', 'users.id')
+            ->leftJoin('project_categories', 'posts.category_id', '=', 'project_categories.id')
+            ->select([
+                'posts.id',
+                'posts.title',
+                'posts.content',
+                'posts.is_published',
+                'posts.updated_at',
+                'users.name AS author_name',
+                'project_categories.name AS category_name'
+            ])
+            ->where('category_id', '=', $param)
+            ->orderByDesc('posts.updated_at')
+            ->paginate(20);
+
+        $categories = ProjectCategory::where('is_active', '=', 1)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.posts.index', [
+            'posts' => $posts,
+            'categories' => $categories
+        ]);
     }
 }

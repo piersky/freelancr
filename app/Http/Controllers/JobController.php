@@ -41,7 +41,10 @@ class JobController extends Controller
             abort(401, 'Unauthorized');
         }*/
 
-        return view('admin.jobs.index', ['jobs' => $jobs, 'customers' => $customers]);
+        return view('admin.jobs.index', [
+            'jobs' => $jobs,
+            'customers' => $customers
+        ]);
     }
 
     /**
@@ -57,7 +60,11 @@ class JobController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.jobs.create', ['job' => $job, 'users' => $users, 'customers' => $customers]);
+        return view('admin.jobs.create', [
+            'job' => $job,
+            'users' => $users,
+            'customers' => $customers
+        ]);
     }
 
     /**
@@ -108,7 +115,11 @@ class JobController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.jobs.edit', ['job' => $job, 'users' => $users, 'customers' => $customers]);
+        return view('admin.jobs.edit', [
+            'job' => $job,
+            'users' => $users,
+            'customers' => $customers
+        ]);
     }
 
     /**
@@ -182,6 +193,9 @@ class JobController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.jobs.index', ['jobs' => $jobs, 'customers' => $customers]);
+        return view('admin.jobs.index', [
+            'jobs' => $jobs,
+            'customers' => $customers
+        ]);
     }
 }

@@ -77,6 +77,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('admin.posts.edit');
     Route::patch('/posts/{id}', [PostController::class, 'update'])->name('admin.posts.update');
     Route::get('/posts/{id}', [PostController::class, 'show'])->name('admin.posts.show');
+    Route::get('/posts/{param}/filter', [PostController::class, 'filter'])->name('admin.posts.filter');
 
     Route::get('/credentials', [CredentialController::class, 'index'])->name('admin.credentials');
     Route::get('/credentials/create', [CredentialController::class, 'create'])->name('admin.credentials.create');

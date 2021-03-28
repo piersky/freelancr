@@ -36,7 +36,14 @@
                                 <th class="text-center text-uppercase">{{__('posts.Excerpt')}}</th>
                                 <th class="text-center text-uppercase">{{__('posts.Author')}}</th>
                                 <th class="text-center text-uppercase">{{__('posts.Last update')}}</th>
-                                <th class="text-center text-uppercase">{{__('posts.Category')}}</th>
+                                <th class="text-center text-uppercase">
+                                    <select id="category_id" name="category_id" class="form-control">
+                                        <option>{{__('posts.Category')}}</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -64,6 +71,10 @@
     <script>
         $('document').ready(function () {
             $('div.alert').fadeOut(5000);
+
+            $('#category_id').change(function(){
+                location.href = "/admin/posts/"+$(this).val()+"/filter";
+            })
         })
     </script>
 @endsection
