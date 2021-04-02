@@ -50,7 +50,7 @@
                             @foreach($posts as $post)
                                 <tr id="tr-{{$post->id}}" class="{{(!$post->is_published?"bg-secondary":"")}}" onclick="location.href='/admin/posts/{{$post->id}}';">
                                     <td class="text-center text-uppercase"><strong>{{substr($post->title, 0, 30)}}...</strong></td>
-                                    <td class="text-center">{{substr($post->content, 0, 50)}}...</td>
+                                    <td class="text-center">{!! substr($post->content, 0, 50) !!}...</td>
                                     <td class="text-center text-uppercase">{{$post->author_name}}</td>
                                     <td class="text-center">{{date('d/m/Y H:i:s', strtotime($post->updated_at))}}</td>
                                     <td class="text-center">{{$post->category_name}}</td>

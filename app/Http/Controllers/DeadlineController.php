@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deadline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -36,7 +37,24 @@ class DeadlineController extends Controller
      */
     public function create()
     {
-        //
+        $deadline = new Deadline();
+
+        $categories = DB::table('deadline_categories')
+            //TODO: use settings
+            ->where('lang_id', '=', 'it')
+            ->orderBy('name')
+            ->get();
+
+        $customers = DB::table('customers')
+            ->where('is_active', '=', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.deadlines.create', [
+            'credential' => $deadline,
+            'categories' => $categories,
+            'customers' => $customers
+        ]);
     }
 
     /**
@@ -47,7 +65,19 @@ class DeadlineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $deadline = new Deadline();
+
+        $deadline['name'] = $request->input('name');
+        $deadline['deadline_category_id'] = $request->input('deadline_category_id');
+        $deadline['description'] = $request->input('description');
+        $deadline['deadline_at'] = $request->input('deadline_at');
+        $deadline['customer_id'] = $request->input('customer_id');
+        $deadline->created_by = Auth::user()->id;
+        $deadline->updated_by = Auth::user()->id;
+
+        $deadline->save();
+
+        return redirect('/admin/deadlines')->with('success', 'Deadlines saved');
     }
 
     /**

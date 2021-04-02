@@ -8,5 +8,7 @@ return [
     'Category' => 'Categoria',
     'Customer' => 'Cliente',
     'Name' => 'Nome',
-    'New deadline' => 'Nuova scadenza'
+    'New deadline' => 'Nuova scadenza',
+    'Description' => 'Descrizione',
+    'Deadline date' => 'Scadenza'
 ];
