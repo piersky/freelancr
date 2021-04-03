@@ -43,7 +43,7 @@
                             <tbody>
                             @foreach($deadlines as $deadline)
                                 <tr id="tr-{{$deadline->id}}" onclick="location.href='/admin/deadlines/{{$deadline->id}}';">
-                                    <td class="text-center">{{$deadline->deadline_at}}</td>
+                                    <td class="text-center">{{date('d/m/Y', strtotime($deadline->deadline_at))}}</td>
                                     <td class="text-center"><strong>{{$deadline->category_name}}</strong></td>
                                     <td class="text-center">{{$deadline->customer_name}}</td>
                                     <td class="text-center">{{$deadline->name}}</td>

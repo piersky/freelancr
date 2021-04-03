@@ -127,9 +127,9 @@ class CredentialController extends Controller
             //TODO: change accordingly with settings
             ->where('cc.lang_id', '=', 'it')
             ->where('c.id', '=', $id)
-            ->get();
+            ->first();
 
-        return view('admin.credentials.show', ['credential' => $credential[0]]);
+        return view('admin.credentials.show', ['credential' => $credential]);
     }
 
     /**

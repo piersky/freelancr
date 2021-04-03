@@ -33,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo '€ ' . number_format($amount, 2, ',', '.'); ?>";
         });
 
+        Blade::directive('date_eu', function ($date) {
+            return "<?= date('d/m/Y', strtotime($date)); ?>";
+        });
+
         Paginator::useBootstrap();
     }
 }

@@ -91,7 +91,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/deadlines', [DeadlineController::class, 'index'])->name('admin.deadlines');
     Route::get('/deadlines/create', [DeadlineController::class, 'create'])->name('admin.deadlines.create');
     Route::post('/deadlines', [DeadlineController::class, 'store']);
-    Route::get('/deadlines/{id}', [DeadlineController::class, 'show']);
+    Route::get('/deadlines/{id}', [DeadlineController::class, 'show'])->name('admin.deadlines.show');
     Route::get('/deadlines/{id}/edit', [DeadlineController::class, 'edit'])->name('admin.deadlines.edit');
     Route::patch('/deadlines/{id}', [DeadlineController::class, 'update'])->name('admin.deadlines.update');
     Route::post('/deadlines/filter', [DeadlineController::class, 'filter'])->name('admin.deadlines.filter');
