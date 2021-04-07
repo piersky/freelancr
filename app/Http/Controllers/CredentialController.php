@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Credential;
 use App\Settings;
+use App\SettingsUser;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class CredentialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Settings $settings)
+    public function index(SettingsUser $userSettings)
     {
         $creds = DB::table('credentials AS c')
             ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
@@ -29,8 +30,8 @@ class CredentialController extends Controller
             //TODO: change accordingly with settings
             ->where('cc.lang_id', '=', 'it');
 
-        if ($settings->has('credential_filter_customer_id')) {
-            $creds = $creds->where('c.customer_id', '=', $settings->get('credential_filter_customer_id'));
+        if ($userSettings->has('credential_filter_customer_id')) {
+            $creds = $creds->where('c.customer_id', '=', $userSettings->get('credential_filter_customer_id'));
         }
 
         $creds = $creds
@@ -52,7 +53,7 @@ class CredentialController extends Controller
             'credentials' => $creds,
             'categories' => $categories,
             'customers' => $customers,
-            'customer_id' => ($settings->has('credential_filter_customer_id')?$settings->get('credential_filter_customer_id'):""),
+            'customer_id' => ($userSettings->has('credential_filter_customer_id')?$userSettings->get('credential_filter_customer_id'):""),
         ]);
     }
 
@@ -196,7 +197,7 @@ class CredentialController extends Controller
         //
     }
 
-    public function filter(Request $request, Settings $settings){
+    public function filter(Request $request, SettingsUser $userSettings){
         $creds = DB::table('credentials AS c')
             ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
             ->join('customers AS cu', 'c.customer_id', '=', 'cu.id')
@@ -230,9 +231,9 @@ class CredentialController extends Controller
 
         if ($request->input('customer_id') != "") {
             $creds = $creds->where('customer_id', '=', $request->input('customer_id'));
-            $settings->put('credential_filter_customer_id', $request->input('customer_id'));
+            $userSettings->put('credential_filter_customer_id', $request->input('customer_id'));
         } else {
-            $settings->forget('credential_filter_customer_id');
+            $userSettings->forget('credential_filter_customer_id');
         }
 
         $creds = $creds->orderByDesc('c.id')
@@ -253,11 +254,11 @@ class CredentialController extends Controller
             'credentials' => $creds,
             'categories' => $categories,
             'customers' => $customers,
-            'customer_id' => ($settings->has('credential_filter_customer_id')?$settings->get('credential_filter_customer_id'):""),
+            'customer_id' => ($userSettings->has('credential_filter_customer_id')?$userSettings->get('credential_filter_customer_id'):""),
         ]);
     }
 
-    public function reset_filter(Request $request, Settings $settings){
+    public function reset_filter(Request $request, SettingsUser $userSettings){
 
     }
 }
