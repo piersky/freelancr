@@ -185,9 +185,8 @@
         });
         $('#btn-reset').on('click', function (evt) {
             evt.preventDefault();
-            var url = '/admin/credentials/reset-filter';
             $.ajax({
-                url: url,
+                url: '/admin/credentials/reset-filter',
                 method: 'post',
                 data: {
                     '_token': '{{csrf_token()}}'
@@ -195,6 +194,7 @@
                 complete: function (resp) {
                     if (resp.responseText == 1) {
                         console.log('OK');
+                        window.location.href = '/admin/credentials';
                     } else {
                         console.log('Problem contacting the server');
                     }

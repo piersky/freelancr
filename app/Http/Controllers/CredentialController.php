@@ -30,6 +30,26 @@ class CredentialController extends Controller
             //TODO: change accordingly with settings
             ->where('cc.lang_id', '=', 'it');
 
+        if ($userSettings->has('credential_filter_credential_category_id')) {
+            $creds = $creds->where('c.credential_category_id', '=', $userSettings->get('credential_filter_credential_category_id'));
+        }
+
+        if ($userSettings->has('credential_filter_name')) {
+            $creds = $creds->where('c.name', 'LIKE', "%".$userSettings->get('credential_filter_name')."%");
+        }
+
+        if ($userSettings->has('credential_filter_host_name')) {
+            $creds = $creds->where('c.host_name', 'LIKE', "%".$userSettings->get('credential_filter_host_name')."%");
+        }
+
+        if ($userSettings->has('credential_filter_user_name')) {
+            $creds = $creds->where('c.user_name', 'LIKE', "%".$userSettings->get('credential_filter_user_name')."%");
+        }
+
+        if ($userSettings->has('credential_filter_description')) {
+            $creds = $creds->where('c.description', 'LIKE', "%".$userSettings->get('credential_filter_description')."%");
+        }
+
         if ($userSettings->has('credential_filter_customer_id')) {
             $creds = $creds->where('c.customer_id', '=', $userSettings->get('credential_filter_customer_id'));
         }
@@ -197,7 +217,8 @@ class CredentialController extends Controller
         //
     }
 
-    public function filter(Request $request, SettingsUser $userSettings){
+    public function filter(Request $request, SettingsUser $userSettings)
+    {
         $creds = DB::table('credentials AS c')
             ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
             ->join('customers AS cu', 'c.customer_id', '=', 'cu.id')
@@ -210,27 +231,42 @@ class CredentialController extends Controller
             ->where('cc.lang_id', '=', 'it');
 
         if ($request->input('credential_category_id') != "") {
-            $creds = $creds->where('credential_category_id', '=', $request->input('credential_category_id'));
+            $creds = $creds->where('c.credential_category_id', '=', $request->input('credential_category_id'));
+            $userSettings->put('credential_filter_credential_category_id', $request->input('credential_category_id'));
+        } else {
+            $userSettings->forget('credential_filter_credential_category_id');
         }
 
         if ($request->input('name') != "") {
-            $creds = $creds->where('name', '=', $request->input('name'));
+            $creds = $creds->where('c.name', 'LIKE', "%".$request->input('name')."%");
+            $userSettings->put('credential_filter_name', $request->input('name'));
+        } else {
+            $userSettings->forget('credential_filter_name');
         }
 
         if ($request->input('host_name') != "") {
-            $creds = $creds->where('host_name', '=', $request->input('host_name'));
+            $creds = $creds->where('c.host_name', 'LIKE', "%".$request->input('host_name')."%");
+            $userSettings->put('credential_filter_host_name', $request->input('host_name'));
+        } else {
+            $userSettings->forget('credential_filter_host_name');
         }
 
         if ($request->input('user_name') != "") {
-            $creds = $creds->where('user_name', '=', $request->input('user_name'));
+            $creds = $creds->where('c.user_name', 'LIKE', "%".$request->input('user_name')."%");
+            $userSettings->put('credential_filter_user_name', $request->input('user_name'));
+        } else {
+            $userSettings->forget('credential_filter_user_name');
         }
 
         if ($request->input('description') != "") {
-            $creds = $creds->where('description', '=', $request->input('description'));
+            $creds = $creds->where('c.description', 'LIKE', "%".$request->input('description')."%");
+            $userSettings->put('credential_filter_description', $request->input('description'));
+        } else {
+            $userSettings->forget('credential_filter_description');
         }
 
         if ($request->input('customer_id') != "") {
-            $creds = $creds->where('customer_id', '=', $request->input('customer_id'));
+            $creds = $creds->where('c.customer_id', '=', $request->input('customer_id'));
             $userSettings->put('credential_filter_customer_id', $request->input('customer_id'));
         } else {
             $userSettings->forget('credential_filter_customer_id');
@@ -258,7 +294,47 @@ class CredentialController extends Controller
         ]);
     }
 
-    public function reset_filter(Request $request, SettingsUser $userSettings){
+    public function reset_filter(SettingsUser $userSettings)
+    {
+        $userSettings->forget('credential_filter_credential_category_id');
+        $userSettings->forget('credential_filter_name');
+        $userSettings->forget('credential_filter_host_name');
+        $userSettings->forget('credential_filter_user_name');
+        $userSettings->forget('credential_filter_description');
+        $userSettings->forget('credential_filter_customer_id');
 
+        /*$creds = DB::table('credentials AS c')
+            ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
+            ->join('customers AS cu', 'c.customer_id', '=', 'cu.id')
+            ->select([
+                'c.*',
+                'cc.name AS category',
+                'cu.name AS customer'
+            ])
+            //TODO: change accordingly with settings
+            ->where('cc.lang_id', '=', 'it')
+            ->orderByDesc('c.id')
+            ->paginate('50');
+
+        $categories = DB::table('credential_categories')
+            //TODO: use settings
+            ->where('lang_id', '=', 'it')
+            ->orderBy('name')
+            ->get();
+
+        $customers = DB::table('customers')
+            ->where('is_active', '=', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.credentials.index', [
+            'credentials' => $creds,
+            'categories' => $categories,
+            'customers' => $customers,
+            'customer_id' => "",
+        ]);*/
+
+        if (request()->ajax()) return '1';
+        else return redirect()->back();
     }
 }
