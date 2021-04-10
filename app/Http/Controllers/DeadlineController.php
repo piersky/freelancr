@@ -24,6 +24,7 @@ class DeadlineController extends Controller
                 'c.name AS customer_name',
                 'dc.name AS category_name'
             ])
+            ->orderBy('d.deadline_at')
             ->where('dc.lang_id', '=', 'it')
             ->paginate();
 
