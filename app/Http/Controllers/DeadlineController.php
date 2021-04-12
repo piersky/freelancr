@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deadline;
+use App\SettingsUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -38,13 +39,12 @@ class DeadlineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(SettingsUser $settingsUser)
     {
         $deadline = new Deadline();
 
         $categories = DB::table('deadline_categories')
-            //TODO: use settings
-            ->where('lang_id', '=', 'it')
+            ->where('lang_id', '=', ($settingsUser->has('lang_id')?$settingsUser->get('lang_id'):"en"))
             ->orderBy('name')
             ->get();
 
@@ -114,13 +114,12 @@ class DeadlineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, SettingsUser $settingsUser)
     {
         $deadline = Deadline::find($id);
 
         $categories = DB::table('deadline_categories')
-            //TODO: use settings
-            ->where('lang_id', '=', 'it')
+            ->where('lang_id', '=', ($settingsUser->has('lang_id')?$settingsUser->get('lang_id'):"en"))
             ->orderBy('name')
             ->get();
 

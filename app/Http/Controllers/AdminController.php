@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Customer;
+use App\SettingsUser;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -57,7 +59,8 @@ class AdminController extends Controller
         ]);
     }
 
-    public function graphData(){
+    public function graphData()
+    {
         $result = DB::table('activities')
             ->selectRaw('YEAR(start_at) year, MONTH(start_at) month, DAY(start_at) day, SUM(used_hours) hours')
             ->whereRaw('start_at BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()')
@@ -66,5 +69,26 @@ class AdminController extends Controller
 
         if (request()->ajax()) return '' . $result;
         else return redirect()->back();
+    }
+
+    public function user_settings(SettingsUser $userSettings)
+    {
+        return view('admin.user_settings', [
+            'lang_id' => $userSettings->has('lang_id')?$userSettings->get('lang_id'):"en",
+            'pagination' => $userSettings->has('pagination')?$userSettings->get('pagination'):50,
+        ]);
+    }
+
+    public function save_user_settings(Request $request, SettingsUser $userSettings)
+    {
+        $userSettings->put('lang_id', $request->input('radioLang'));
+
+        $pag = $request->input('pagination')!=""?$request->input('pagination'):50;
+        $userSettings->put('pagination', $pag);
+
+        return view('admin.user_settings', [
+            'lang_id' => $request->input('radioLang'),
+            'pagination' => $pag
+        ])->with('success', 'Settings saved');
     }
 }

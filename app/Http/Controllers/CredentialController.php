@@ -27,8 +27,7 @@ class CredentialController extends Controller
                 'cc.name AS category',
                 'cu.name AS customer'
             ])
-            //TODO: change accordingly with settings
-            ->where('cc.lang_id', '=', 'it');
+            ->where('cc.lang_id', '=', ($userSettings->has('lang_id')?$userSettings->get('lang_id'):"en"));
 
         if ($userSettings->has('credential_filter_credential_category_id')) {
             $creds = $creds->where('c.credential_category_id', '=', $userSettings->get('credential_filter_credential_category_id'));
@@ -59,8 +58,7 @@ class CredentialController extends Controller
             ->paginate('50');
 
         $categories = DB::table('credential_categories')
-            //TODO: use settings
-            ->where('lang_id', '=', 'it')
+            ->where('lang_id', '=', ($userSettings->has('lang_id')?$userSettings->get('lang_id'):"en"))
             ->orderBy('name')
             ->get();
 
@@ -82,13 +80,12 @@ class CredentialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(SettingsUser $userSettings)
     {
         $credential = new Credential();
 
         $categories = DB::table('credential_categories')
-            //TODO: use settings
-            ->where('lang_id', '=', 'it')
+            ->where('lang_id', '=', ($userSettings->has('lang_id')?$userSettings->get('lang_id'):"en"))
             ->orderBy('name')
             ->get();
 
@@ -135,7 +132,7 @@ class CredentialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, SettingsUser $userSettings)
     {
         $credential = DB::table('credentials AS c')
             ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
@@ -145,8 +142,7 @@ class CredentialController extends Controller
                 'cc.name AS category',
                 'cu.name AS customer'
             ])
-            //TODO: change accordingly with settings
-            ->where('cc.lang_id', '=', 'it')
+            ->where('cc.lang_id', '=', ($userSettings->has('lang_id')?$userSettings->get('lang_id'):"en"))
             ->where('c.id', '=', $id)
             ->first();
 
@@ -159,13 +155,12 @@ class CredentialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, SettingsUser $settingsUser)
     {
         $credential = Credential::find($id);
 
         $categories = DB::table('credential_categories')
-            //TODO: use settings
-            ->where('lang_id', '=', 'it')
+            ->where('lang_id', '=', ($settingsUser->has('lang_id')?$settingsUser->get('lang_id'):"en"))
             ->orderBy('name')
             ->get();
 
@@ -227,8 +222,7 @@ class CredentialController extends Controller
                 'cc.name AS category',
                 'cu.name AS customer',
             ])
-            //TODO: change accordingly with settings
-            ->where('cc.lang_id', '=', 'it');
+            ->where('cc.lang_id', '=', ($userSettings->has('lang_id')?$userSettings->get('lang_id'):"en"));
 
         if ($request->input('credential_category_id') != "") {
             $creds = $creds->where('c.credential_category_id', '=', $request->input('credential_category_id'));
@@ -276,8 +270,7 @@ class CredentialController extends Controller
             ->paginate('50');
 
         $categories = DB::table('credential_categories')
-            //TODO: use settings
-            ->where('lang_id', '=', 'it')
+            ->where('lang_id', '=', ($userSettings->has('lang_id')?$userSettings->get('lang_id'):"en"))
             ->orderBy('name')
             ->get();
 
@@ -302,37 +295,6 @@ class CredentialController extends Controller
         $userSettings->forget('credential_filter_user_name');
         $userSettings->forget('credential_filter_description');
         $userSettings->forget('credential_filter_customer_id');
-
-        /*$creds = DB::table('credentials AS c')
-            ->join('credential_categories AS cc', 'cc.id', '=', 'c.credential_category_id')
-            ->join('customers AS cu', 'c.customer_id', '=', 'cu.id')
-            ->select([
-                'c.*',
-                'cc.name AS category',
-                'cu.name AS customer'
-            ])
-            //TODO: change accordingly with settings
-            ->where('cc.lang_id', '=', 'it')
-            ->orderByDesc('c.id')
-            ->paginate('50');
-
-        $categories = DB::table('credential_categories')
-            //TODO: use settings
-            ->where('lang_id', '=', 'it')
-            ->orderBy('name')
-            ->get();
-
-        $customers = DB::table('customers')
-            ->where('is_active', '=', true)
-            ->orderBy('name')
-            ->get();
-
-        return view('admin.credentials.index', [
-            'credentials' => $creds,
-            'categories' => $categories,
-            'customers' => $customers,
-            'customer_id' => "",
-        ]);*/
 
         if (request()->ajax()) return '1';
         else return redirect()->back();

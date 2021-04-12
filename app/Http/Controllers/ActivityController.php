@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\User;
+use App\SettingsUser;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(SettingsUser $userSettings)
     {
         $activities = DB::table('activities')
             ->join('projects', 'activities.project_id', '=', 'projects.id')
@@ -34,8 +35,7 @@ class ActivityController extends Controller
                 'customers.name AS customer_name'
             ])
             ->orderByDesc('activities.start_at')
-            //TODO: use settings
-            ->paginate(20);
+            ->paginate(($userSettings->has('pagination')?$userSettings->get('pagination'):"20"));
 
         $sum = $activities->sum('used_hours');
 
@@ -295,6 +295,9 @@ class ActivityController extends Controller
 
         $sum = $activities->sum('used_hours');
 
-        return view('admin.activities.index', ['activities' => $activities, 'sum' => $sum]);
+        return view('admin.activities.index', [
+            'activities' => $activities,
+            'sum' => $sum
+        ]);
     }
 }

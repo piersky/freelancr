@@ -61,6 +61,12 @@
                         <p><span>{{__('Deadlines')}}</span></p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route("admin.user_settings") }}" class="nav-link {{ request()->is('admin/user_settings') || request()->is('admin/user_settings/*') ? 'active' : '' }}">
+                        <i class="fa-fw fas fa-cog"></i>
+                        <p><span>{{__('Settings')}}</span></p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
