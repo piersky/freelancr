@@ -15,3 +15,4 @@ yarn-error.log
 /public/assets/img/*
 /public/assets/CV_ITA.pdf
 /public/assets/CV_ENG.pdf
+/public/node_modules
