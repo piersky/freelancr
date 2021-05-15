@@ -1,6 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        .blurPassword{
+            color: transparent;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .backgroundGreen{
+            background-color: #90EE90;
+            position: relative;
+        }
+
+        .backgroundGreen:after{
+            position: absolute;
+            content: "{{__('credentials.Copied')}}";
+            top: -13px;
+            left: 0;
+            background-color: white;
+            border-radius: 20px;
+            color: black;
+            font-weight: bold;
+            padding: 1px 10px;
+            border: 1px solid black;
+            text-shadow: none;
+        }
+    </style>
     <div class="container">
         <div class="col-lg-12 mb-2">
             <a class="btn btn-success text-uppercase" href="{{ route("admin.credentials.create") }}">
@@ -19,6 +44,14 @@
                     <span class="fa fa-filter"></span>
                 </button>
             </div>
+            <div class="col-sm-6">
+                <div class="input-group mb-3">
+                     <div class="input-group-prepend">
+                         <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                     </div>
+                     <input type="text" class="form-control filtroContatti" placeholder="{{__('credentials.Filter by customer')}}" style="width: 200px">
+                 </div>
+             </div>
         </div>
         @if($credentials ?? '')
             <div class="row">
@@ -37,20 +70,22 @@
                                 <th class="text-center text-uppercase">{{__('credentials.Category')}}</th>
                                 <th class="text-center text-uppercase">{{__('credentials.Customer')}}</th>
                                 <th class="text-center text-uppercase">{{__('credentials.Name')}}</th>
-                                <th class="text-center text-uppercase">{{__('credentials.Host')}}</th>
+                                {{-- <th class="text-center text-uppercase">{{__('credentials.Host')}}</th> --}}
                                 <th class="text-center text-uppercase">{{__('credentials.User name')}}</th>
                                 <th class="text-center text-uppercase">{{__('credentials.Password')}}</th>
+                                <th class="text-center text-uppercase">&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($credentials as $credential)
-                                <tr id="tr-{{$credential->id}}" onclick="location.href='/admin/credentials/{{$credential->id}}';">
+                                <tr id="tr-{{$credential->id}}" class="controlVisibility"> {{--onclick="location.href='/admin/credentials/{{$credential->id}}';">--}}
                                     <td class="text-center"><strong>{{$credential->category}}</strong></td>
                                     <td class="text-center">{{$credential->customer}}</td>
                                     <td class="text-center">{{$credential->name}}</td>
-                                    <td class="text-center">{{$credential->host_name}}</td>
-                                    <td class="text-center">{{$credential->user_name}}</td>
-                                    <td class="text-center">{{$credential->password}}</td>
+                                    {{--<td class="text-center">{{$credential->host_name}}</td>--}}
+                                    <td class="text-center userName">{{$credential->user_name}}</td>
+                                    <td class="text-center pwrd blurPassword">{{$credential->password}}</td>
+                                    <td class="text-center"><button class="btn btn-primary"  onclick="location.href='{{route('admin.credentials.update', ['id' => $credential->id])}}';" ><i class="fas fa-info"></i></button></td>
                                 </tr>
                             @endforeach
                             @else
@@ -201,5 +236,35 @@
                 }
             });
         });
+
+        $(".userName").on("click", function(){
+            var username = $(this);
+            copyElementText(this);
+            $("*").removeClass("backgroundGreen");
+            username.addClass("backgroundGreen");
+        });
+
+        $(".pwrd").on("click", function(){
+            var lucchetto = $(this);
+            if (!lucchetto.hasClass("blurPassword")){
+                copyElementText(this);
+                $("*").removeClass("backgroundGreen");
+                lucchetto.addClass("backgroundGreen");
+            } 
+        });
+            $(".pwrd").on({
+            mouseenter : function(){ $(this).removeClass("blurPassword") },
+            mouseout: function(){  $(this).addClass("blurPassword")  }
+        });
+
+        function copyElementText(tag) {
+            var text = $(tag).text();
+            var elem = document.createElement("textarea");
+            document.body.appendChild(elem);
+            elem.value = text;
+            elem.select();
+            document.execCommand("copy");
+            document.body.removeChild(elem);
+        }
     </script>
 @endsection

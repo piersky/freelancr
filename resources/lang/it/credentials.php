@@ -12,5 +12,6 @@ return [
     'New credential' => 'Nuova credenziale',
     'Customer' => 'Cliente',
     'Generate' => 'Genera',
-    'No credentials yet.' => 'Ancora nessuna credenziale.'
+    'No credentials yet.' => 'Ancora nessuna credenziale.',
+    'Copied' => 'Copiato'
 ];
