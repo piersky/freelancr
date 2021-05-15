@@ -44,14 +44,6 @@
                     <span class="fa fa-filter"></span>
                 </button>
             </div>
-            <div class="col-sm-6">
-                <div class="input-group mb-3">
-                     <div class="input-group-prepend">
-                         <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                     </div>
-                     <input type="text" class="form-control filtroContatti" placeholder="{{__('credentials.Filter by customer')}}" style="width: 200px">
-                 </div>
-             </div>
         </div>
         @if($credentials ?? '')
             <div class="row">
