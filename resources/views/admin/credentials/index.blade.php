@@ -66,6 +66,7 @@
                                 <th class="text-center text-uppercase">{{__('credentials.User name')}}</th>
                                 <th class="text-center text-uppercase">{{__('credentials.Password')}}</th>
                                 <th class="text-center text-uppercase">&nbsp;</th>
+                                <th class="text-center text-uppercase">&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -77,7 +78,8 @@
                                     {{--<td class="text-center">{{$credential->host_name}}</td>--}}
                                     <td class="text-center userName">{{$credential->user_name}}</td>
                                     <td class="text-center pwrd blurPassword">{{$credential->password}}</td>
-                                    <td class="text-center"><button class="btn btn-primary"  onclick="location.href='{{route('admin.credentials.update', ['id' => $credential->id])}}';" ><i class="fas fa-info"></i></button></td>
+                                    <td class="text-center"><button class="btn btn-primary" onclick="location.href='{{route('admin.credentials.update', ['id' => $credential->id])}}';" ><i class="fas fa-info"></i></button></td>
+                                    <td><button type="button" id="deleteCredential" class="btn btn-danger ml-1 deleteCredential" data-id="{{$credential->id}}" data-url="/admin/credentials/{{$credential->id}}"><span class="fa fa-trash"></span></button></td>
                                 </tr>
                             @endforeach
                             @else
@@ -178,6 +180,25 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title text-uppercase" id="exampleModalLabel">{{__('Confirm')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{__('Please, click on DELETE to confirm the record cancellation.')}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
+                    <button type="submit" class="btn btn-danger text-uppercase" id ="btn-delete">{{__('Delete')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('footer')
     @parent
@@ -191,25 +212,8 @@
             var url = '/admin/credentials/filter';
 
             $('#filterModal').modal('show');
-
-            $('#btn-elimina').on('click', function () {
-                $.ajax({
-                    url: url,
-                    method: 'post',
-                    data: {
-                        '_token': '{{csrf_token()}}'
-                    },
-                    complete: function (resp) {
-                        if (resp.responseText == 1) {
-                            tr.remove();
-                            $('#filterModal').modal('hide');
-                        } else {
-                            console.log('Problem contacting the server');
-                        }
-                    }
-                });
-            });
         });
+
         $('#btn-reset').on('click', function (evt) {
             evt.preventDefault();
             $.ajax({
@@ -226,6 +230,34 @@
                         console.log('Problem contacting the server');
                     }
                 }
+            });
+        });
+
+        $('.deleteCredential').on('click', function (evt) {
+            evt.preventDefault();
+
+            var url = $(this).data('url');
+            var id = $(this).data('id');
+            var tr = $('#tr-'+id);
+
+            $('#deleteModal').modal('show');
+
+            $('#btn-delete').on('click', function () {
+                $.ajax({
+                    url: url,
+                    method: 'DELETE',
+                    data: {
+                        '_token': '{{csrf_token()}}'
+                    },
+                    complete: function(resp){
+                        if (resp.responseText == 1) {
+                            tr.remove();
+                            $('#deleteModal').modal('hide');
+                        } else {
+                            console.log('Problem contacting the server');
+                        }
+                    }
+                })
             });
         });
 

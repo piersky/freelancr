@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/credentials/{id}', [CredentialController::class, 'show']);
     Route::get('/credentials/{id}/edit', [CredentialController::class, 'edit'])->name('admin.credentials.edit');
     Route::patch('/credentials/{id}', [CredentialController::class, 'update'])->name('admin.credentials.update');
+    Route::delete('/credentials/{id}', [CredentialController::class, 'destroy']);
     Route::post('/credentials/filter', [CredentialController::class, 'filter'])->name('admin.credentials.filter');
     Route::post('/credentials/reset-filter', [CredentialController::class, 'reset_filter'])->name('admin.credentials.reset-filter');
 

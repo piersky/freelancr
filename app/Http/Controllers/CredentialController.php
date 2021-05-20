@@ -209,7 +209,11 @@ class CredentialController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $credential = Credential::find($id);
+        $result = $credential->delete();
+
+        if (request()->ajax()) return '' . $result;
+        else return redirect()->back();
     }
 
     public function filter(Request $request, SettingsUser $userSettings)
