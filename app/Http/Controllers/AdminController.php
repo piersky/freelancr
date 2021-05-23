@@ -52,10 +52,22 @@ class AdminController extends Controller
             ->limit(5)
             ->get();
 
+        $deadlines = DB::table('deadlines', 'd')
+            ->join('customers AS c', 'd.customer_id', '=', 'c.id')
+            ->select([
+                'd.*',
+                'c.name AS customer_name'
+            ])
+            ->orderBy('deadline_at')
+            ->whereRaw('deadline_at > NOW()')
+            ->limit(5)
+            ->get();
+
         return view('admin.index', [
             'jobs' => $jobs,
             'customers' => $customers,
-            'activities' => $activities
+            'activities' => $activities,
+            'deadlines' => $deadlines
         ]);
     }
 

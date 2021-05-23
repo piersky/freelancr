@@ -10,6 +10,24 @@
         <div class="row">
             <div class="card col-sm-6">
                 <div class="card-header">
+                    <h4>{{__('Deadlines')}}</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{__('Next expirations')}} {{Auth::user()->name}}</h5>
+                    <table>
+                        @foreach($deadlines as $deadline)
+                            <tr>
+                                <td class="text-left px-3">{{date('d/m/Y H:i', strtotime($deadline->deadline_at))}}</td>
+                                <td class="text-left text-uppercase">{{$deadline->name}}</td>
+                                <td class="text-leftr px-3">{{$deadline->customer_name}}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="card-footer bg-transparent border-success">Footer</div>
+            </div>
+            <div class="card col-sm-6">
+                <div class="card-header">
                     <h4>{{__('Jobs Due')}}</h4>
                 </div>
                 <div class="card-body">
@@ -22,24 +40,6 @@
                             <td class="text-leftr px-3">{{$job->customer_name}}</td>
                         </tr>
                     @endforeach
-                    </table>
-                </div>
-                <div class="card-footer bg-transparent border-success">Footer</div>
-            </div>
-            <div class="card col-sm-6">
-                <div class="card-header">
-                    <h4>{{__('Last activities')}}</h4>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{__('Activities')}} {{Auth::user()->name}}</h5>
-                    <table>
-                        @foreach($activities as $activity)
-                            <tr>
-                                <td class="text-left px-3">{{date('d/m/Y H:i', strtotime($activity->start_at))}}</td>
-                                <td class="text-left text-uppercase">{{$activity->name}}</td>
-                                <td class="text-leftr px-3">{{$activity->description}}</td>
-                            </tr>
-                        @endforeach
                     </table>
                 </div>
                 <div class="card-footer bg-transparent border-success">Footer</div>
