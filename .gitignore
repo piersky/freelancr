@@ -17,4 +17,6 @@ yarn-error.log
 /public/assets/CV_ENG.pdf
 /.idea
 /.vscode
+/.history
 /public/node_modules
+/public/privacy_speak_repeat.html
