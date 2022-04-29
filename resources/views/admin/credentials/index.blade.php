@@ -5,7 +5,7 @@
         .blurPassword{
             color: transparent;
             text-shadow: 0 0 5px rgba(0,0,0,0.5);
-        }
+        } 
 
         .backgroundGreen{
             background-color: #90EE90;
@@ -48,7 +48,7 @@
         @if($credentials ?? '')
             <div class="row">
                 <div class="col-sm-4 my-2 justify-content-end">
-                    {{$credentials->links()}}
+                    {{$credentials->appends($_GET)->links()}}
                 </div>
             </div>
         @endif
@@ -92,7 +92,7 @@
             @if($credentials ?? '')
                 <div class="row">
                     <div class="col-sm-4 my-2 justify-content-end">
-                        {{$credentials->links()}}
+                        {{$credentials->appends($_GET)->links()}}
                     </div>
                 </div>
             @endif
@@ -110,7 +110,7 @@
                 <div class="modal-body">
                     {{__('Please filter.')}}
                     <div class="row align-content-center">
-                        <form action="{{route('admin.credentials.filter')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('admin.credentials.filter')}}" method="GET" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="container">
                                 <div class="row">
