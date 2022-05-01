@@ -110,8 +110,8 @@
                 <div class="modal-body">
                     {{__('Please filter.')}}
                     <div class="row align-content-center">
-                        <form action="{{route('admin.credentials.filter')}}" method="GET" enctype="multipart/form-data">
-                            {{csrf_field()}}
+                        <form action="{{route('admin.credentials.filter')}}" method="GET">
+                            
                             <div class="container">
                                 <div class="row">
                                     <div class="form-group col-sm-4">
