@@ -93,6 +93,10 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'project_id' => 'required'
+        ]);
+
         $activity = new Activity();
 
         $activity->name = $request->input('name');

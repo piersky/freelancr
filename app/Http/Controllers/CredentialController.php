@@ -55,7 +55,8 @@ class CredentialController extends Controller
 
         $creds = $creds
             ->orderByDesc('c.id')
-            ->paginate('50');
+            ->get();
+            //->paginate('50');
 
         $categories = DB::table('credential_categories')
             ->where('lang_id', '=', ($userSettings->has('lang_id')?$userSettings->get('lang_id'):"en"))
@@ -271,7 +272,8 @@ class CredentialController extends Controller
         }
 
         $creds = $creds->orderByDesc('c.id')
-            ->paginate('50');
+            ->get();
+            //->paginate('50');
 
         $categories = DB::table('credential_categories')
             ->where('lang_id', '=', ($userSettings->has('lang_id')?$userSettings->get('lang_id'):"en"))

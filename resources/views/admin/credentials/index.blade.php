@@ -45,17 +45,11 @@
                 </button>
             </div>
         </div>
-        @if($credentials ?? '')
-            <div class="row">
-                <div class="col-sm-4 my-2 justify-content-end">
-                    {{$credentials->appends($_GET)->links()}}
-                </div>
-            </div>
-        @endif
+        
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped credentials-table">
                         @if($credentials ?? '')
                             <thead class="thead-dark">
                             <tr>
@@ -89,6 +83,7 @@
                     </table>
                 </div>
             </div>
+            @php /*
             @if($credentials ?? '')
                 <div class="row">
                     <div class="col-sm-4 my-2 justify-content-end">
@@ -96,6 +91,7 @@
                     </div>
                 </div>
             @endif
+            */@endphp
         </div>
     </div>
     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -205,7 +201,15 @@
     <script>
         $('document').ready(function () {
             $('div.alert').fadeOut(5000);
-        })
+
+            $('.credentials-table').DataTable({
+                "lengthMenu": [10, 20, 50, 100, 250, 500],
+                "pageLength": 50,
+                language: {
+                    url: '/js/dataTables.italian.json'
+                }
+            });
+        });
 
         $('#btn-filter').on('click', function (evt) {
             evt.preventDefault();
